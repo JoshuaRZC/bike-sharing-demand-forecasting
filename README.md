@@ -19,15 +19,13 @@ bike-sharing-demand-forecasting/
 ├── code/
 │   ├── final_analysis.ipynb
 │   ├── exploratory_pipeline.ipynb
-│   ├── paths.py
 │   ├── data.py
-│   ├── features.py
+│   ├── eda.py
+│   ├── preprocessing.py
 │   ├── arima.py
-│   ├── regression.py
-│   ├── sequence.py
-│   ├── diagnostics.py
-│   ├── plots.py
-│   └── metrics.py
+│   ├── lagged_regression.py
+│   ├── rnn_lstm.py
+│   └── analysis.py
 ├── data/
 │   ├── hour.csv
 │   ├── day.csv
