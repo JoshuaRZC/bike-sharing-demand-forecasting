@@ -1,8 +1,7 @@
 import pandas as pd
 from statsmodels.tsa.arima.model import ARIMA
-from statsmodels.tsa.statespace.sarimax import SARIMAX
 
-from metrics import metric_dict
+from analysis import metric_dict
 
 
 def fit_arima_candidates(train_df, valid_df, seasonal_lag=24, orders=None):
@@ -28,8 +27,3 @@ def fit_arima_candidates(train_df, valid_df, seasonal_lag=24, orders=None):
         )
 
     return pd.DataFrame(rows).sort_values(["RMSE", "AIC"]).reset_index(drop=True)
-
-
-def fit_arimax_template(*args, **kwargs):
-    # Move the SARIMAX block from the exploratory notebook here when finalizing.
-    return SARIMAX(*args, **kwargs)

@@ -1,13 +1,18 @@
+from pathlib import Path
+
 import matplotlib.pyplot as plt
+import numpy as np
+from sklearn.metrics import mean_absolute_error, mean_squared_error
 
-from paths import FIGURES_DIR
+
+FIGURES_DIR = Path(__file__).resolve().parents[1] / "figures"
 
 
-def save_current_figure(filename):
-    FIGURES_DIR.mkdir(exist_ok=True)
-    path = FIGURES_DIR / filename
-    plt.savefig(path, bbox_inches="tight")
-    return path
+def metric_dict(y_true, y_pred):
+    return {
+        "MAE": float(mean_absolute_error(y_true, y_pred)),
+        "RMSE": float(np.sqrt(mean_squared_error(y_true, y_pred))),
+    }
 
 
 def plot_forecast_comparison(actual, predictions, title, start=None):

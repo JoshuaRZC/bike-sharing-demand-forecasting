@@ -1,7 +1,7 @@
 import pandas as pd
 from sklearn.linear_model import LinearRegression
 
-from metrics import metric_dict
+from analysis import metric_dict
 
 
 def fit_lagged_regression(reg_train, reg_valid, reg_test, target_col="cnt"):

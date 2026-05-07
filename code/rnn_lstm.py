@@ -14,8 +14,3 @@ class SeqNet(nn.Module):
     def forward(self, x):
         out, _ = self.rnn(x)
         return self.fc(out[:, -1, :])
-
-
-def run_sequence_model(*args, **kwargs):
-    # Keep this as the landing spot for the LSTM/RNN training loop.
-    raise NotImplementedError("Move the sequence-model training loop here when finalizing.")
