@@ -5,11 +5,6 @@ import pandas as pd
 def prepare_hourly_data(raw_df):
     """
     Create a complete hourly modeling frame from the raw hourly data.
-    This function performs the following steps:
-    1. Reindex to the full hourly range so missing timestamps become rows.
-    2. Extract calendar fields from the timestamp.
-    3. Interpolate continuous variables; keep weather situation as a category.
-    4. Keep only variables used later in the analysis.
     """
     # Reindex to the full hourly range so missing timestamps become rows.
     full_index = pd.date_range(
