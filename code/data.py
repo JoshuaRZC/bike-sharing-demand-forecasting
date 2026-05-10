@@ -3,10 +3,11 @@ from pathlib import Path
 import pandas as pd
 
 
-# Define paths to data and figures directories
+# Project paths
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = PROJECT_ROOT / "data"
 FIGURES_DIR = PROJECT_ROOT / "figures"
+RESULTS_DIR = PROJECT_ROOT / "results"
 
 HOUR_DATA_PATH = DATA_DIR / "hour.csv"
 DAY_DATA_PATH = DATA_DIR / "day.csv"
