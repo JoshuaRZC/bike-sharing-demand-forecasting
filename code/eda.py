@@ -136,7 +136,7 @@ def plot_calendar_patterns(model_df):
         whiskerprops={"color": PRIMARY, "linewidth": 1.0},
         capprops={"color": PRIMARY, "linewidth": 1.0},
     )
-    _fill_boxes(box)
+    fill_boxes(box)
 
     axes[0].set_title("A. Monthly Demand Pattern", loc="left")
     axes[0].set_xlabel("Month")
@@ -227,8 +227,8 @@ def plot_weather_relationships(model_df, bins=10):
     }
     weather_groups = [model_df.loc[model_df["weathersit"] == key, "cnt"] for key in weather_labels]
 
-    box = axes[3].boxplot(weather_groups, positions=np.arange(1, 5), **_box_style())
-    _fill_boxes(box)
+    box = axes[3].boxplot(weather_groups, positions=np.arange(1, 5), **box_style())
+    fill_boxes(box)
 
     axes[3].set_title("D. Weather Situation", loc="left")
     axes[3].set_xlabel("Weather situation")
@@ -318,28 +318,28 @@ def plot_acf_pacf_diagnostics(log_cnt, log_diff_1, log_diff_24):
     fig, axes = plt.subplots(2, 2, figsize=(14, 8.6), constrained_layout=True)
     title_prefix = "Log1p Hourly Demand"
 
-    _plot_acf_stem(
+    plot_acf_stem(
         axes[0, 0],
         log_cnt.to_numpy(),
         f"A. ACF ({title_prefix})",
         max_lag=168,
         highlight_lags=[1, 2, 3, 24, 48, 168],
     )
-    _plot_acf_stem(
+    plot_acf_stem(
         axes[0, 1],
         log_diff_1.to_numpy(),
         f"B. First-Differenced ACF ({title_prefix})",
         max_lag=168,
         highlight_lags=[1, 2, 3, 24, 48, 168],
     )
-    _plot_acf_stem(
+    plot_acf_stem(
         axes[1, 0],
         log_diff_24.to_numpy(),
         f"C. 24-Hour Differenced ACF ({title_prefix})",
         max_lag=168,
         highlight_lags=[1, 2, 3, 24, 48, 168],
     )
-    _plot_pacf_stem(
+    plot_pacf_stem(
         axes[1, 1],
         log_diff_24.to_numpy(),
         f"D. 24-Hour Differenced PACF ({title_prefix})",
@@ -397,7 +397,7 @@ def plot_welch_periodograms(log_cnt, log_diff_1, log_diff_24):
     plt.show()
 
 
-def _box_style():
+def box_style():
     return {
         "widths": 0.56,
         "patch_artist": True,
@@ -409,24 +409,24 @@ def _box_style():
     }
 
 
-def _fill_boxes(box):
+def fill_boxes(box):
     for patch in box["boxes"]:
         patch.set_facecolor(PRIMARY)
         patch.set_alpha(0.18)
 
 
-def _add_confidence_band(ax, lags, values, confint):
+def add_confidence_band(ax, lags, values, confint):
     band = confint[1:] - values[1:, None]
     ax.fill_between(lags, band[:, 0], band[:, 1], color=NEUTRAL, alpha=0.26, zorder=0)
     ax.plot(lags, band[:, 0], color=NEUTRAL, lw=0.7, alpha=0.65, zorder=1)
     ax.plot(lags, band[:, 1], color=NEUTRAL, lw=0.7, alpha=0.65, zorder=1)
 
 
-def _plot_acf_stem(ax, values, title, max_lag, highlight_lags=None):
+def plot_acf_stem(ax, values, title, max_lag, highlight_lags=None):
     acf_vals, confint = acf(values, nlags=max_lag, fft=True, alpha=0.05)
     lags = np.arange(1, max_lag + 1)
 
-    _add_confidence_band(ax, lags, acf_vals, confint)
+    add_confidence_band(ax, lags, acf_vals, confint)
     ax.vlines(lags, 0, acf_vals[1:], color=SECONDARY, lw=1.0, alpha=0.85)
     ax.axhline(0, color="black", lw=0.8)
 
@@ -443,11 +443,11 @@ def _plot_acf_stem(ax, values, title, max_lag, highlight_lags=None):
     ax.grid(True, axis="y", alpha=0.25)
 
 
-def _plot_pacf_stem(ax, values, title, max_lag):
+def plot_pacf_stem(ax, values, title, max_lag):
     pacf_vals, confint = pacf(values, nlags=max_lag, method="ywm", alpha=0.05)
     lags = np.arange(1, max_lag + 1)
 
-    _add_confidence_band(ax, lags, pacf_vals, confint)
+    add_confidence_band(ax, lags, pacf_vals, confint)
     ax.vlines(lags, 0, pacf_vals[1:], color=SECONDARY, lw=1.0, alpha=0.85)
     ax.axhline(0, color="black", lw=0.8)
     ax.set_title(title, loc="left")
