@@ -62,29 +62,45 @@ def prepare_hourly_data(raw_df):
     return hourly_df[keep_cols].copy()
 
 
-def chronological_split(df, train_frac=0.6, valid_frac=0.2):
+def time_based_split(df, train_frac=0.6, valid_frac=0.2, gap_hours=168):
+    """
+    Split the hourly frame with a gap between periods.
+    """
     n = len(df)
     train_end = int(n * train_frac)
     valid_end = int(n * (train_frac + valid_frac))
     return (
         df.iloc[:train_end].copy(),
-        df.iloc[train_end:valid_end].copy(),
-        df.iloc[valid_end:].copy(),
+        df.iloc[train_end + gap_hours:valid_end].copy(),
+        df.iloc[valid_end + gap_hours:].copy(),
     )
 
 
 def split_summary(train_df, valid_df, test_df):
+    """
+    Summarize the train, validation, and test splits.
+    """
+    starts = [train_df.index.min(), valid_df.index.min(), test_df.index.min()]
+    ends = [train_df.index.max(), valid_df.index.max(), test_df.index.max()]
+    gaps = [0]
+    for start, previous_end in zip(starts[1:], ends[:-1]):
+        gaps.append(int((start - previous_end) / pd.Timedelta(hours=1)) - 1)
+
     return pd.DataFrame(
         {
             "rows": [len(train_df), len(valid_df), len(test_df)],
-            "start": [train_df.index.min(), valid_df.index.min(), test_df.index.min()],
-            "end": [train_df.index.max(), valid_df.index.max(), test_df.index.max()],
+            "start": starts,
+            "end": ends,
+            "gap_from_previous_hours": gaps,
         },
         index=["train", "validation", "test"],
     )
 
 
 def add_lag_features(df, target="cnt", lags=(1, 2, 3, 24, 168)):
+    """
+    Add lag features for the target variable.
+    """
     out = df.copy()
     for lag in lags:
         out[f"lag_{lag}"] = out[target].shift(lag)
@@ -92,6 +108,9 @@ def add_lag_features(df, target="cnt", lags=(1, 2, 3, 24, 168)):
 
 
 def make_regression_frame(df):
+    """
+    Create a regression-ready frame with dummy variables.
+    """
     return pd.get_dummies(
         df,
         columns=["season", "mnth", "hr", "weekday", "weathersit"],
