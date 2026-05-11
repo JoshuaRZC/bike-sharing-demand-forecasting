@@ -220,3 +220,6 @@ __marimo__/
 *.out
 *.synctex.gz
 *.xdv
+
+# Visual Studio Code
+.vscode/
