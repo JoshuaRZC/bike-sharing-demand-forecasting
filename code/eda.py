@@ -6,6 +6,8 @@ import matplotlib.pyplot as plt
 from scipy.signal import welch
 from statsmodels.tsa.stattools import acf, pacf
 
+from data import FIGURES_DIR
+
 
 PRIMARY = "#234E70"
 SECONDARY = "#4F6D7A"
@@ -88,6 +90,7 @@ def plot_demand_scale(model_df):
     for ax in axes:
         ax.grid(True, axis="y", alpha=0.25)
 
+    fig.savefig(FIGURES_DIR / "eda_demand_scale.png", bbox_inches="tight")
     plt.show()
 
 
@@ -173,6 +176,7 @@ def plot_calendar_patterns(model_df):
         ax.grid(True, axis="y", alpha=0.25)
         ax.grid(False, axis="x")
 
+    fig.savefig(FIGURES_DIR / "eda_calendar_patterns.png", bbox_inches="tight")
     plt.show()
 
 
@@ -238,6 +242,7 @@ def plot_weather_relationships(model_df, bins=10):
     axes[3].grid(True, axis="y", alpha=0.25)
     axes[3].grid(False, axis="x")
 
+    fig.savefig(FIGURES_DIR / "eda_weather_pattern.png", bbox_inches="tight")
     plt.show()
 
 
@@ -288,6 +293,7 @@ def plot_mean_variance_check(model_df):
     for ax in axes:
         ax.grid(True, alpha=0.25)
 
+    fig.savefig(FIGURES_DIR / "eda_mean_variance_check.png", bbox_inches="tight")
     plt.show()
 
 
@@ -346,6 +352,7 @@ def plot_acf_pacf_diagnostics(log_cnt, log_diff_1, log_diff_24):
         max_lag=72,
     )
 
+    fig.savefig(FIGURES_DIR / "eda_acf_pacf_diagnostics.png", bbox_inches="tight")
     plt.show()
 
 
@@ -394,6 +401,7 @@ def plot_welch_periodograms(log_cnt, log_diff_1, log_diff_24):
 
     axes[0].legend(loc="upper right")
 
+    fig.savefig(FIGURES_DIR / "eda_welch_periodograms.png", bbox_inches="tight")
     plt.show()
 
 
