@@ -688,6 +688,86 @@
       font-weight: 600;
     }
 
+    .data-layout {
+      grid-template-columns: 1fr 1fr;
+      gap: 34px;
+      align-items: stretch;
+      height: calc(100% - 225px);
+    }
+
+    .data-panel {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      background: rgba(255, 255, 255, 0.58);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 24px;
+    }
+
+    .data-panel .metric-row {
+      margin-top: 0;
+    }
+
+    .data-panel .metric {
+      min-width: 0;
+      flex: 1 1 0;
+    }
+
+    .data-notes {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 26px;
+    }
+
+    .data-note {
+      min-height: 116px;
+      padding: 18px;
+      background: rgba(255, 255, 255, 0.74);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .data-note strong {
+      color: var(--blue);
+      font-size: 18px;
+      line-height: 1.15;
+    }
+
+    .data-note span {
+      display: block;
+      margin-top: 9px;
+      color: var(--muted);
+      font-size: 14.5px;
+      line-height: 1.26;
+    }
+
+    .data-table {
+      height: 100%;
+      font-size: 18px;
+    }
+
+    .data-table th,
+    .data-table td {
+      padding: 22px 22px;
+      vertical-align: top;
+    }
+
+    .data-table th {
+      font-size: 12px;
+    }
+
+    .data-table td:first-child {
+      width: 34%;
+      color: var(--blue);
+      font-size: 19px;
+    }
+
     .bar-panel {
       padding: 20px 22px;
     }
@@ -1058,22 +1138,22 @@
     <section class="slide" data-section="Data" data-title="Two years of hourly Capital Bikeshare demand">
       <div class="eyebrow animate">Data</div>
       <h2 class="animate delay-1">Two years of hourly Capital Bikeshare demand, calendar context, and weather.</h2>
-      <div class="slide-grid wide-left">
-        <div class="animate delay-1">
+      <div class="slide-grid data-layout">
+        <div class="data-panel animate delay-1">
           <div class="metric-row">
             <div class="metric"><span class="value">17,379</span><span class="label">observed rows</span></div>
             <div class="metric gold"><span class="value">2011-12</span><span class="label">time span</span></div>
             <div class="metric copper"><span class="value">cnt</span><span class="label">response</span></div>
           </div>
-          <div class="bullet-list">
-            <div class="bullet">Hourly file from the Bike Sharing Dataset.</div>
-            <div class="bullet">Response is total rentals per hour.</div>
-            <div class="bullet">Calendar and weather variables are used as predictors.</div>
-            <div class="bullet"><code>casual</code> and <code>registered</code> are excluded because they sum to the response.</div>
+          <div class="data-notes">
+            <div class="data-note"><strong>Source file</strong><span>Hourly observations from the Bike Sharing Dataset.</span></div>
+            <div class="data-note"><strong>Response</strong><span>Total rentals per hour, labeled <code>cnt</code></span></div>
+            <div class="data-note"><strong>Predictors</strong><span>Calendar context and weather conditions.</span></div>
+            <div class="data-note"><strong>Excluded fields</strong><span><code>casual</code> and <code>registered</code> sum directly to <code>cnt</code>.</span></div>
           </div>
         </div>
-        <div class="animate delay-2">
-          <table class="mini-table">
+        <div class="data-panel animate delay-2">
+          <table class="mini-table data-table">
             <thead><tr><th>Variable group</th><th>Examples</th></tr></thead>
             <tbody>
               <tr><td>Calendar</td><td class="muted">hour, weekday, holiday, working day, month, season</td></tr>
