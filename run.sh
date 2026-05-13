@@ -4,4 +4,4 @@ cd "$(dirname "$0")/code"
 
 conda activate bike-sharing-demand-forecasting
 
-jupyter nbconvert --to notebook --execute --inplace final_analysis.ipynb
+jupyter nbconvert --to notebook --execute --inplace bike_sharing_demand_forecasting.ipynb
