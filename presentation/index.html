@@ -219,6 +219,18 @@
       object-fit: cover;
     }
 
+    .figure-wrap.aspect-frame {
+      height: auto;
+      aspect-ratio: var(--ratio);
+      align-self: center;
+    }
+
+    .figure-wrap.wide-chart-frame {
+      height: auto;
+      aspect-ratio: var(--ratio);
+      padding: 10px;
+    }
+
     .diagnostic-figure img {
       transform: scale(1.06);
     }
@@ -346,6 +358,44 @@
       font-size: 16px;
       line-height: 1.36;
       margin-top: 8px;
+    }
+
+    .wide-chart-layout {
+      height: calc(100% - 145px);
+      margin-top: 24px;
+      display: grid;
+      grid-template-rows: auto auto;
+      gap: 16px;
+      align-content: start;
+    }
+
+    .wide-chart-notes {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .chart-note {
+      min-height: 96px;
+      padding: 16px 18px;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+
+    .chart-note strong {
+      display: block;
+      color: var(--blue);
+      font-size: 18px;
+      line-height: 1.15;
+    }
+
+    .chart-note span {
+      display: block;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.25;
+      margin-top: 7px;
     }
 
     .title-slide {
@@ -937,14 +987,15 @@
     }
 
     .forecast-layout {
-      grid-template-columns: 0.62fr 1.38fr;
-      height: calc(100% - 210px);
+      display: grid;
+      grid-template-columns: 1fr;
+      height: auto;
+      margin-top: 22px;
     }
 
-    .static-forecast img {
-      width: 154%;
+    .forecast-main {
+      aspect-ratio: 2.84;
       height: auto;
-      max-width: none;
     }
 
     .iframe-wrap {
@@ -1255,17 +1306,14 @@
     <section class="slide" data-section="EDA" data-title="Demand is skewed and seasonal">
       <div class="eyebrow animate">Exploratory Analysis</div>
       <h2 class="animate delay-1">Demand is skewed, noisy hour to hour, and seasonal across the two years.</h2>
-      <div class="slide-grid wide-right">
-        <div class="callout animate delay-1">
-          <p class="claim">Peak hours are much larger than ordinary hours.</p>
-          <div class="bullet-list">
-            <div class="bullet">Right-skewed hourly counts motivate a log scale.</div>
-            <div class="bullet">Daily averages move over season and year.</div>
-            <div class="bullet">Models need both short-run and calendar structure.</div>
-          </div>
-        </div>
-        <div class="figure-wrap animate delay-2">
+      <div class="wide-chart-layout">
+        <div class="figure-wrap wide-chart-frame animate delay-1" style="--ratio: 3.13;">
           <img src="../figures/eda_demand_scale.png" alt="Demand distribution and daily average demand">
+        </div>
+        <div class="wide-chart-notes animate delay-2">
+          <div class="chart-note"><strong>Right-skewed counts</strong><span>Peak hours are much larger than ordinary hours.</span></div>
+          <div class="chart-note"><strong>Slow calendar movement</strong><span>Daily averages shift by season and year.</span></div>
+          <div class="chart-note"><strong>Modeling implication</strong><span>Use log demand and calendar context later.</span></div>
         </div>
       </div>
       <div class="footer"><span>Demand Scale</span><div class="progress"><span></span></div></div>
@@ -1274,14 +1322,15 @@
     <section class="slide" data-section="EDA" data-title="Calendar timing drives demand shape">
       <div class="eyebrow animate">Calendar Pattern</div>
       <h2 class="animate delay-1">Calendar timing drives the shape of demand.</h2>
-      <div class="full-figure short figure-wrap animate delay-2">
+      <div class="wide-chart-layout">
+      <div class="figure-wrap wide-chart-frame animate delay-1" style="--ratio: 3.14;">
         <img src="../figures/eda_calendar_patterns.png" alt="Monthly, weekday-hour, and working-day demand patterns">
       </div>
-      <div class="chip-row animate delay-2">
-        <span class="chip">warmer months are higher</span>
-        <span class="chip">working days show commute peaks</span>
-        <span class="chip">non-working days shift toward midday</span>
-        <span class="chip">24h and 168h history become natural predictors</span>
+      <div class="wide-chart-notes animate delay-2">
+        <div class="chart-note"><strong>Month</strong><span>Warmer months have higher demand.</span></div>
+        <div class="chart-note"><strong>Working status</strong><span>Working days show commute peaks.</span></div>
+        <div class="chart-note"><strong>Lag choice</strong><span>24h and 168h history become natural predictors.</span></div>
+      </div>
       </div>
       <div class="footer"><span>Calendar Structure</span><div class="progress"><span></span></div></div>
     </section>
@@ -1301,7 +1350,7 @@
             </div>
           </div>
         </div>
-        <div class="figure-wrap animate delay-2">
+        <div class="figure-wrap aspect-frame animate delay-2" style="--ratio: 1.76;">
           <img src="../figures/eda_weather_pattern.png" alt="Weather relationships with bike demand">
         </div>
       </div>
@@ -1311,17 +1360,14 @@
     <section class="slide" data-section="EDA" data-title="Log scale stabilizes the modeling target">
       <div class="eyebrow animate">Scale Choice</div>
       <h2 class="animate delay-1">The log scale makes the modeling target more stable.</h2>
-      <div class="slide-grid wide-right">
-        <div class="callout animate delay-1">
-          <p class="claim">Raw count variance rises with the mean.</p>
-          <p class="body">For lagged regression, RNN, and LSTM, the models train on log demand and predictions are converted back to counts before evaluation.</p>
-          <div class="chip-row">
-            <span class="chip">train on log demand</span>
-            <span class="chip">score in original counts</span>
-          </div>
-        </div>
-        <div class="figure-wrap animate delay-2">
+      <div class="wide-chart-layout">
+        <div class="figure-wrap wide-chart-frame animate delay-1" style="--ratio: 2.99;">
           <img src="../figures/eda_mean_variance_check.png" alt="Mean-variance relationship on raw and log scale">
+        </div>
+        <div class="wide-chart-notes animate delay-2">
+          <div class="chart-note"><strong>Raw scale</strong><span>Variance rises with mean demand.</span></div>
+          <div class="chart-note"><strong>Log scale</strong><span>The mean-variance pattern weakens.</span></div>
+          <div class="chart-note"><strong>Evaluation</strong><span>Train on log demand; score in original counts.</span></div>
         </div>
       </div>
       <div class="footer"><span>Mean-Variance Check</span><div class="progress"><span></span></div></div>
@@ -1339,7 +1385,7 @@
           </div>
           <p class="body" style="margin-top: 22px;">These three numbers are the backbone of the modeling strategy: short-run, daily, and weekly history all matter.</p>
         </div>
-        <div class="figure-wrap animate delay-2">
+        <div class="figure-wrap aspect-frame animate delay-2" style="--ratio: 1.62;">
           <img src="../figures/eda_acf_pacf_diagnostics.png" alt="ACF and PACF diagnostics">
         </div>
       </div>
@@ -1358,7 +1404,7 @@
             <div class="bullet">This becomes the ARIMA benchmark transformation.</div>
           </div>
         </div>
-        <div class="figure-wrap animate delay-2">
+        <div class="figure-wrap aspect-frame animate delay-2" style="--ratio: 1.25;">
           <img src="../figures/eda_welch_periodograms.png" alt="Welch periodograms before and after differencing">
         </div>
       </div>
@@ -1397,7 +1443,7 @@
             <div class="metric copper"><span class="value">84.2</span><span class="label">test RMSE</span></div>
           </div>
         </div>
-        <div class="figure-wrap animate delay-2">
+        <div class="figure-wrap aspect-frame animate delay-2" style="--ratio: 1.83;">
           <img src="../figures/model_arima_order_search.png" alt="ARIMA order search">
         </div>
       </div>
@@ -1419,7 +1465,7 @@
             <div class="metric copper"><span class="value">0.44</span><span class="label">residual ACF at lag 168</span></div>
           </div>
         </div>
-        <div class="figure-wrap diagnostic-figure animate delay-2">
+        <div class="figure-wrap aspect-frame diagnostic-figure animate delay-2" style="--ratio: 1.83;">
           <img src="../figures/diagnostic_arima_validation.png" alt="ARIMA validation residual diagnostics">
         </div>
       </div>
@@ -1442,7 +1488,7 @@
             <div class="bullet">Weekly residual dependence is still large.</div>
           </div>
         </div>
-        <div class="figure-wrap diagnostic-figure animate delay-2">
+        <div class="figure-wrap aspect-frame diagnostic-figure animate delay-2" style="--ratio: 1.83;">
           <img src="../figures/diagnostic_sarimax_validation.png" alt="SARIMAX validation residual diagnostics">
         </div>
       </div>
@@ -1452,7 +1498,7 @@
     <section class="slide" data-section="Models" data-title="Lagged regression makes the EDA explicit">
       <div class="eyebrow animate">Interpretable Feature Model</div>
       <h2 class="animate delay-1">Lagged regression makes the EDA explicit.</h2>
-      <div class="slide-grid wide-left">
+      <div class="slide-grid wide-right">
         <div class="animate delay-1">
           <p class="claim">The model uses short-run, daily, and weekly lags together with calendar and weather predictors.</p>
           <div class="chip-row">
@@ -1467,7 +1513,7 @@
             <div class="metric copper"><span class="value">59.4</span><span class="label">test RMSE</span></div>
           </div>
         </div>
-        <div class="figure-wrap diagnostic-figure animate delay-2">
+        <div class="figure-wrap aspect-frame diagnostic-figure animate delay-2" style="--ratio: 1.83;">
           <img src="../figures/diagnostic_lagged_regression_validation.png" alt="Lagged regression residual diagnostics">
         </div>
       </div>
@@ -1477,7 +1523,7 @@
     <section class="slide" data-section="Models" data-title="Poisson helps, but counts are overdispersed">
       <div class="eyebrow animate">Count Model Extension</div>
       <h2 class="animate delay-1">Poisson regression helps, but the counts are overdispersed.</h2>
-      <div class="slide-grid wide-left">
+      <div class="slide-grid wide-right">
         <div class="animate delay-1">
           <div class="big-number" style="font-size: 98px;">7.14</div>
           <div class="unit">Pearson dispersion statistic</div>
@@ -1487,7 +1533,7 @@
             <div class="metric copper"><span class="value">57.8</span><span class="label">test RMSE</span></div>
           </div>
         </div>
-        <div class="figure-wrap diagnostic-figure animate delay-2">
+        <div class="figure-wrap aspect-frame diagnostic-figure animate delay-2" style="--ratio: 1.83;">
           <img src="../figures/diagnostic_poisson_lagged_regression_validation.png" alt="Poisson lagged regression residual diagnostics">
         </div>
       </div>
@@ -1513,7 +1559,7 @@
             </tbody>
           </table>
         </div>
-        <div class="figure-wrap animate delay-2">
+        <div class="figure-wrap aspect-frame animate delay-2" style="--ratio: 2.05;">
           <img src="../figures/diagnostic_rnn_training.png" alt="RNN training history">
         </div>
       </div>
@@ -1536,7 +1582,7 @@
             <div class="bullet">Daily and weekly residual autocorrelation are reduced, not eliminated.</div>
           </div>
         </div>
-        <div class="figure-wrap animate delay-2">
+        <div class="figure-wrap aspect-frame animate delay-2" style="--ratio: 2.05;">
           <img src="../figures/diagnostic_lstm_training.png" alt="LSTM training history">
         </div>
       </div>
@@ -1571,11 +1617,8 @@
     <section class="slide" data-section="Results" data-title="Forecast errors concentrate around peaks">
       <div class="eyebrow animate">Forecast Interpretation</div>
       <h2 class="animate delay-1">Most models capture the daily cycle; peak timing and magnitude are harder.</h2>
-      <div class="two-figures forecast-layout animate delay-2">
-        <div class="figure-wrap static-forecast">
-          <img src="../figures/analysis_forecast_comparison.png" alt="Forecast comparison on test period">
-        </div>
-        <div class="iframe-wrap" title="Interactive forecast comparison">
+      <div class="forecast-layout animate delay-2">
+        <div class="iframe-wrap forecast-main" title="Interactive forecast comparison">
           <iframe src="../figures/analysis_interactive_forecast_comparison.html" loading="lazy"></iframe>
         </div>
       </div>
@@ -1636,6 +1679,10 @@
         }
       });
       document.title = `${current + 1}/${slides.length} · ${slides[current].dataset.title || "Bike-Sharing Demand Forecasting"}`;
+      const hash = `#${current + 1}`;
+      if (window.location.hash !== hash) {
+        history.replaceState(null, "", hash);
+      }
     }
 
     function nextSlide() {
@@ -1666,7 +1713,8 @@
       }
     });
 
-    showSlide(0);
+    const initial = Number.parseInt(window.location.hash.replace("#", ""), 10);
+    showSlide(Number.isFinite(initial) ? initial - 1 : 0);
   </script>
 </body>
 </html>
