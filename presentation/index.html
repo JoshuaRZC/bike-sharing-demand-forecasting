@@ -351,7 +351,7 @@
     .title-slide {
       padding: 0;
       display: none;
-      grid-template-columns: 3fr 2fr;
+      grid-template-columns: 53fr 47fr;
     }
 
     .title-slide.active {
@@ -367,7 +367,8 @@
     }
 
     .title-copy h1 {
-      font-size: 62px;
+      font-size: 56px;
+      margin-top: 58px;
     }
 
     .title-visual {
@@ -393,11 +394,30 @@
 
     .question {
       padding: 18px 0 0;
-      margin-top: 24px;
+      margin-top: 16px;
       border-top: 1px solid rgba(184, 154, 95, 0.45);
       color: var(--muted);
       font-size: 18px;
       line-height: 1.4;
+    }
+
+    .title-meta {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 10px 18px;
+      max-width: 580px;
+      margin-top: 0;
+      color: var(--muted);
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1.15px;
+      font-weight: 500;
+    }
+
+    .title-meta span + span {
+      padding-left: 0;
+      border-left: 0;
     }
 
     .author {
@@ -929,19 +949,19 @@
       <div class="title-copy">
         <div>
           <div class="eyebrow animate">STAT 248 Final Project</div>
-          <h1 class="animate delay-1">Forecasting Hourly Bike-Sharing Demand</h1>
-          <p class="subtitle animate delay-2">Washington, DC Capital Bikeshare</p>
-          <p class="question animate delay-2">What temporal structure characterizes hourly bike-sharing demand, and how well can short-term demand be forecast from historical usage, calendar variables, and weather?</p>
+          <h1 class="animate delay-1">Forecasting Hourly Bike-Sharing Demand in Washington, DC</h1>
         </div>
         <div>
-          <div class="author animate delay-2">
+          <div class="title-meta animate delay-2">
             <span>Joshua Ren</span>
+            <span>SID 3041881898</span>
             <span>May 2026</span>
           </div>
+          <p class="question animate delay-2">What temporal structure characterizes hourly bike-sharing demand, and how well can short-term demand be forecast from historical usage, calendar variables, and weather?</p>
         </div>
       </div>
       <div class="title-visual">
-        <img src="../figures/hourly_demand_structure.png" alt="Hourly bike-sharing demand structure chart">
+        <img src="assets/title-bike-sharing-hero.png" alt="Bike-sharing dock in a refined urban morning scene">
       </div>
     </section>
 
