@@ -1,0 +1,14 @@
+,value
+model_type,lstm
+window,72
+hidden_size,96
+num_layers,2
+dropout,0.15
+epochs,80
+batch_size,128
+learning_rate,0.0008
+history_feature_cols,"['log_cnt', 'temp', 'hum', 'windspeed', 'yr', 'workingday', 'holiday', 'weathersit', 'hr_sin', 'hr_cos', 'weekday_sin', 'weekday_cos', 'month_sin', 'month_cos']"
+target_feature_cols,"['temp', 'hum', 'windspeed', 'yr', 'workingday', 'holiday', 'weathersit', 'hr_sin', 'hr_cos', 'weekday_sin', 'weekday_cos', 'month_sin', 'month_cos', 'log_lag_1', 'log_lag_2', 'log_lag_3', 'log_lag_24', 'log_lag_168']"
+lags,"[1, 2, 3, 24, 168]"
+target,log1p(cnt)
+seed,248

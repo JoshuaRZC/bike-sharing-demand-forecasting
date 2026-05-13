@@ -1,0 +1,3 @@
+model,split,MAE,RMSE
+Poisson Lagged Regression,validation,41.92856474694543,62.08063865103399
+Poisson Lagged Regression,test,37.77270915112706,57.771635801091776

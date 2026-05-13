@@ -1,0 +1,3 @@
+model,split,MAE,RMSE
+Lagged Regression,validation,43.31385402573593,65.70041256578021
+Lagged Regression,test,37.96439484871951,59.3979980164194

@@ -1,4 +1,3 @@
-import numpy as np
 import pandas as pd
 
 
@@ -95,37 +94,3 @@ def split_summary(train_df, valid_df, test_df):
         },
         index=["train", "validation", "test"],
     )
-
-
-def add_lag_features(df, target="cnt", lags=(1, 2, 3, 24, 168)):
-    """
-    Add lag features for the target variable.
-    """
-    out = df.copy()
-    for lag in lags:
-        out[f"lag_{lag}"] = out[target].shift(lag)
-    return out.dropna().copy()
-
-
-def make_regression_frame(df):
-    """
-    Create a regression-ready frame with dummy variables.
-    """
-    return pd.get_dummies(
-        df,
-        columns=["season", "mnth", "hr", "weekday", "weathersit"],
-        drop_first=True,
-    )
-
-
-def make_sequence_arrays(df, feature_cols, target_col="cnt", window=24):
-    X_list, y_list, index_list = [], [], []
-    values = df[feature_cols].to_numpy(dtype=np.float32)
-    target = df[target_col].to_numpy(dtype=np.float32)
-
-    for i in range(window, len(df)):
-        X_list.append(values[i - window : i])
-        y_list.append(target[i])
-        index_list.append(df.index[i])
-
-    return np.stack(X_list), np.array(y_list, dtype=np.float32), np.array(index_list)

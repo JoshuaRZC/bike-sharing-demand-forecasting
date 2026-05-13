@@ -17,14 +17,14 @@ What temporal structure characterizes hourly bike-sharing demand, and how well c
 ```text
 bike-sharing-demand-forecasting/
 ├── code/
-│   ├── final_analysis.ipynb
-│   ├── exploratory_pipeline.ipynb
+│   ├── bike_sharing_demand_forecasting.ipynb
 │   ├── data.py
 │   ├── eda.py
 │   ├── preprocessing.py
 │   ├── arima.py
 │   ├── lagged_regression.py
 │   ├── rnn_lstm.py
+│   ├── diagnostic.py
 │   └── analysis.py
 ├── data/
 │   ├── hour.csv
@@ -67,7 +67,7 @@ The current analysis is organized around four stages:
 3. Forecasting models, including ARIMA on a 24-hour differenced series, lagged regression with weather and calendar predictors, LSTM window comparison, RNN benchmark, and an ARIMAX-style extension.
 4. Model comparison and diagnostics, including validation/test MAE and RMSE, forecast plots, residual checks, and interpretation of which methods capture the main time dependence.
 
-The exploratory notebook currently gives the fullest working version of this pipeline. The final analysis notebook is the cleaner entry point that will be filled in as the final report version takes shape.
+The main notebook, `code/bike_sharing_demand_forecasting.ipynb`, is the clean entry point for the full analysis.
 
 ## Current Results
 
@@ -93,7 +93,7 @@ bash run.sh
 The script runs:
 
 ```bash
-jupyter nbconvert --to notebook --execute --inplace code/final_analysis.ipynb
+jupyter nbconvert --to notebook --execute --inplace code/bike_sharing_demand_forecasting.ipynb
 ```
 
 ## Outputs

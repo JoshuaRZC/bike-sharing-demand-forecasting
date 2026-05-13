@@ -1,0 +1,10 @@
+{
+  "best_order": [
+    2,
+    0,
+    2
+  ],
+  "seasonal_lag": 24,
+  "search_maxiter": 500,
+  "final_maxiter": 800
+}

@@ -297,13 +297,10 @@ def plot_mean_variance_check(model_df):
     plt.show()
 
 
-def log_dependence_data(model_df, lags=None):
+def log_dependence_data(model_df, lags=(1, 2, 3, 24, 48, 168)):
     """
     Build log-transformed series and selected autocorrelation summaries.
     """
-    if lags is None:
-        lags = [1, 2, 3, 24, 48, 168]
-
     log_cnt = np.log1p(model_df["cnt"])
     log_diff_1 = log_cnt.diff().dropna()
     log_diff_24 = log_cnt.diff(24).dropna()

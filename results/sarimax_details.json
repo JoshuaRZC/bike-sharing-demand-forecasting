@@ -1,0 +1,31 @@
+{
+  "order": [
+    2,
+    0,
+    2
+  ],
+  "seasonal_order": [
+    1,
+    1,
+    0,
+    24
+  ],
+  "exog_cols": [
+    "yr",
+    "workingday",
+    "holiday",
+    "temp",
+    "hum",
+    "windspeed",
+    "weathersit",
+    "hr_sin",
+    "hr_cos",
+    "week_sin",
+    "week_cos",
+    "month_sin",
+    "month_cos"
+  ],
+  "scaling": "standardized y and exog",
+  "search_maxiter": 100,
+  "final_maxiter": 150
+}
