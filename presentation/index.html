@@ -1,0 +1,1458 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bike-Sharing Demand Forecasting</title>
+  <style>
+    :root {
+      --ink: #18222b;
+      --muted: #63717d;
+      --faint: #eef1f0;
+      --paper: #fbfaf6;
+      --panel: #ffffff;
+      --blue: #234e70;
+      --blue-2: #4f6d7a;
+      --copper: #d97b66;
+      --gold: #b89a5f;
+      --sage: #7a9e7e;
+      --line: rgba(24, 34, 43, 0.13);
+      --shadow: 0 22px 60px rgba(21, 33, 45, 0.14);
+      --radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      background:
+        linear-gradient(135deg, rgba(35, 78, 112, 0.08), transparent 34%),
+        linear-gradient(315deg, rgba(217, 123, 102, 0.08), transparent 30%),
+        var(--paper);
+      color: var(--ink);
+      font-family: Avenir Next, Inter, Segoe UI, Helvetica Neue, Arial, sans-serif;
+      overflow: hidden;
+    }
+
+    body {
+      letter-spacing: 0;
+    }
+
+    .deck {
+      width: 100vw;
+      height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 2.2vh 2.2vw;
+    }
+
+    .slide {
+      position: absolute;
+      width: min(96vw, 177.78vh);
+      height: min(96vh, 54vw);
+      aspect-ratio: 16 / 9;
+      background: var(--paper);
+      border: 1px solid rgba(184, 154, 95, 0.28);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      display: none;
+      padding: 42px 54px;
+    }
+
+    .slide.active {
+      display: block;
+    }
+
+    .slide.active .animate {
+      animation: rise 520ms ease both;
+    }
+
+    .slide.active .animate.delay-1 {
+      animation-delay: 90ms;
+    }
+
+    .slide.active .animate.delay-2 {
+      animation-delay: 180ms;
+    }
+
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .slide::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(90deg, rgba(184, 154, 95, 0.17), transparent 18%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.65), transparent 42%);
+      opacity: 0.42;
+    }
+
+    .slide > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.8px;
+      margin-bottom: 14px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 34px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    h1 {
+      max-width: 880px;
+      font-family: Georgia, Times New Roman, serif;
+      font-size: 64px;
+      line-height: 0.98;
+      font-weight: 500;
+      letter-spacing: 0;
+      color: var(--ink);
+    }
+
+    h2 {
+      max-width: 920px;
+      font-family: Georgia, Times New Roman, serif;
+      font-size: 44px;
+      line-height: 1.06;
+      font-weight: 500;
+      letter-spacing: 0;
+      color: var(--ink);
+    }
+
+    h3 {
+      font-size: 18px;
+      line-height: 1.2;
+      font-weight: 750;
+      color: var(--ink);
+    }
+
+    .subtitle {
+      max-width: 700px;
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 20px;
+      line-height: 1.42;
+    }
+
+    .slide-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      height: calc(100% - 112px);
+      align-items: center;
+      margin-top: 28px;
+    }
+
+    .slide-grid.wide-left {
+      grid-template-columns: 1.2fr 0.8fr;
+    }
+
+    .slide-grid.wide-right {
+      grid-template-columns: 0.84fr 1.16fr;
+    }
+
+    .slide-grid.three {
+      grid-template-columns: repeat(3, 1fr);
+      align-items: stretch;
+    }
+
+    .figure-wrap {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.58);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 12px;
+      overflow: hidden;
+    }
+
+    .figure-wrap.plain {
+      background: transparent;
+      border: 0;
+      padding: 0;
+    }
+
+    .figure-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .figure-wrap.cover img {
+      object-fit: cover;
+    }
+
+    .diagnostic-figure img {
+      transform: scale(1.06);
+    }
+
+    .full-figure {
+      height: calc(100% - 130px);
+      margin-top: 24px;
+    }
+
+    .full-figure.short {
+      height: calc(100% - 220px);
+    }
+
+    .callout {
+      border-left: 3px solid var(--gold);
+      padding-left: 18px;
+    }
+
+    .claim {
+      font-size: 24px;
+      line-height: 1.25;
+      font-weight: 720;
+      color: var(--blue);
+      margin-bottom: 18px;
+    }
+
+    .body {
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.45;
+    }
+
+    .metric-row {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .metric {
+      min-width: 128px;
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px 18px;
+    }
+
+    .metric .value {
+      display: block;
+      font-family: Georgia, Times New Roman, serif;
+      font-size: 38px;
+      line-height: 0.95;
+      font-weight: 500;
+      color: var(--blue);
+    }
+
+    .metric .label {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      font-weight: 700;
+    }
+
+    .metric.copper .value {
+      color: var(--copper);
+    }
+
+    .metric.gold .value {
+      color: var(--gold);
+    }
+
+    .bullet-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .bullet {
+      display: grid;
+      grid-template-columns: 18px 1fr;
+      gap: 12px;
+      align-items: start;
+      color: var(--ink);
+      font-size: 18px;
+      line-height: 1.32;
+    }
+
+    .bullet::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--copper);
+      margin-top: 8px;
+    }
+
+    .compact-card,
+    .step,
+    .mini-table,
+    .bar-panel,
+    .quote-panel {
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+
+    .compact-card {
+      padding: 20px;
+    }
+
+    .compact-card .kicker {
+      color: var(--gold);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      font-weight: 780;
+      margin-bottom: 8px;
+    }
+
+    .compact-card p {
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.36;
+      margin-top: 8px;
+    }
+
+    .title-slide {
+      padding: 0;
+      display: none;
+      grid-template-columns: 3fr 2fr;
+    }
+
+    .title-slide.active {
+      display: grid;
+    }
+
+    .title-copy {
+      padding: 62px 58px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-width: 0;
+    }
+
+    .title-copy h1 {
+      font-size: 62px;
+    }
+
+    .title-visual {
+      position: relative;
+      overflow: hidden;
+      background: var(--ink);
+    }
+
+    .title-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(0.92) contrast(0.98);
+      opacity: 0.82;
+    }
+
+    .title-visual::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(24, 34, 43, 0.58), rgba(24, 34, 43, 0.08));
+    }
+
+    .question {
+      padding: 18px 0 0;
+      margin-top: 24px;
+      border-top: 1px solid rgba(184, 154, 95, 0.45);
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.4;
+    }
+
+    .author {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      color: var(--muted);
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      font-weight: 700;
+    }
+
+    .big-number {
+      font-family: Georgia, Times New Roman, serif;
+      font-size: 116px;
+      line-height: 0.88;
+      color: var(--blue);
+      font-weight: 500;
+    }
+
+    .unit {
+      margin-top: 10px;
+      color: var(--gold);
+      font-size: 18px;
+      text-transform: uppercase;
+      letter-spacing: 1.4px;
+      font-weight: 800;
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: 1fr 34px 1fr 34px 1fr;
+      gap: 12px;
+      align-items: center;
+      margin-top: 24px;
+    }
+
+    .flow-item {
+      min-height: 110px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.72);
+      border-radius: var(--radius);
+    }
+
+    .flow-item strong {
+      color: var(--blue);
+      font-size: 18px;
+    }
+
+    .flow-item span {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.25;
+    }
+
+    .arrow {
+      color: var(--gold);
+      font-size: 28px;
+      text-align: center;
+    }
+
+    .roadmap {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 14px;
+      margin-top: 36px;
+    }
+
+    .step {
+      min-height: 310px;
+      padding: 22px 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .step .num {
+      color: var(--gold);
+      font-family: Georgia, Times New Roman, serif;
+      font-size: 42px;
+    }
+
+    .step strong {
+      color: var(--blue);
+      font-size: 20px;
+      line-height: 1.12;
+    }
+
+    .step p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.35;
+    }
+
+    .split {
+      display: grid;
+      gap: 18px;
+      margin-top: 26px;
+    }
+
+    .split-track {
+      height: 86px;
+      display: grid;
+      grid-template-columns: 60fr 3fr 20fr 3fr 20fr;
+      gap: 8px;
+      align-items: stretch;
+    }
+
+    .segment {
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      letter-spacing: 0.4px;
+    }
+
+    .seg-train {
+      background: var(--blue);
+    }
+
+    .seg-valid {
+      background: var(--blue-2);
+    }
+
+    .seg-test {
+      background: var(--copper);
+    }
+
+    .gap {
+      border: 1px dashed rgba(24, 34, 43, 0.32);
+      border-radius: var(--radius);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      writing-mode: vertical-rl;
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+    }
+
+    .model-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .model-card {
+      min-height: 220px;
+      padding: 22px;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid var(--line);
+      border-top: 4px solid var(--gold);
+      border-radius: var(--radius);
+    }
+
+    .model-card h3 {
+      color: var(--blue);
+      font-size: 24px;
+    }
+
+    .model-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 20px 0 0;
+      display: grid;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .mini-table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      font-size: 15px;
+    }
+
+    .mini-table th,
+    .mini-table td {
+      text-align: left;
+      padding: 11px 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .mini-table th {
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.9px;
+      font-size: 11px;
+      font-weight: 800;
+      background: rgba(184, 154, 95, 0.08);
+    }
+
+    .mini-table td {
+      color: var(--ink);
+      font-weight: 650;
+    }
+
+    .mini-table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .mini-table .muted {
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .bar-panel {
+      padding: 20px 22px;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 174px 1fr 56px;
+      gap: 14px;
+      align-items: center;
+      margin: 13px 0;
+      font-size: 15px;
+      color: var(--ink);
+      font-weight: 720;
+    }
+
+    .bar-track {
+      height: 15px;
+      background: rgba(35, 78, 112, 0.1);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: var(--blue-2);
+    }
+
+    .bar-fill.best {
+      background: var(--copper);
+    }
+
+    .bar-value {
+      text-align: right;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 11px;
+      border-radius: 999px;
+      border: 1px solid rgba(184, 154, 95, 0.35);
+      background: rgba(255, 255, 255, 0.68);
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .chip::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--copper);
+    }
+
+    .diag-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .diag-card {
+      min-height: 120px;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.74);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+
+    .diag-card strong {
+      color: var(--blue);
+      font-size: 17px;
+    }
+
+    .diag-card span {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.3;
+    }
+
+    .two-figures {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      height: calc(100% - 156px);
+      margin-top: 22px;
+    }
+
+    .forecast-layout {
+      grid-template-columns: 0.62fr 1.38fr;
+      height: calc(100% - 210px);
+    }
+
+    .static-forecast img {
+      width: 154%;
+      height: auto;
+      max-width: none;
+    }
+
+    .iframe-wrap {
+      width: 100%;
+      height: 100%;
+      border: 1px solid var(--line);
+      background: white;
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    iframe {
+      border: 0;
+      width: 100%;
+      height: 100%;
+      background: white;
+    }
+
+    .takeaways {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 34px;
+    }
+
+    .takeaway {
+      min-height: 312px;
+      background: rgba(255, 255, 255, 0.74);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .takeaway .label {
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+    }
+
+    .takeaway strong {
+      display: block;
+      margin-top: 16px;
+      color: var(--blue);
+      font-family: Georgia, Times New Roman, serif;
+      font-size: 30px;
+      line-height: 1.06;
+      font-weight: 500;
+    }
+
+    .takeaway p {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.38;
+    }
+
+    .footer {
+      position: absolute;
+      left: 54px;
+      right: 54px;
+      bottom: 25px;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: rgba(99, 113, 125, 0.78);
+      font-size: 12px;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .progress {
+      width: 190px;
+      height: 3px;
+      background: rgba(35, 78, 112, 0.12);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress span {
+      display: block;
+      height: 100%;
+      width: var(--progress);
+      background: linear-gradient(90deg, var(--gold), var(--copper));
+    }
+
+    .controls {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      z-index: 10;
+      display: flex;
+      gap: 8px;
+      opacity: 0.16;
+      transition: opacity 180ms ease;
+    }
+
+    .controls:hover,
+    .controls:focus-within {
+      opacity: 1;
+    }
+
+    .nav-button {
+      width: 38px;
+      height: 38px;
+      border: 1px solid rgba(24, 34, 43, 0.18);
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.78);
+      color: var(--blue);
+      font-size: 21px;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 8px 24px rgba(24, 34, 43, 0.12);
+    }
+
+    .nav-button:hover {
+      color: var(--copper);
+    }
+
+    .gold-rule {
+      width: 76px;
+      height: 2px;
+      background: var(--gold);
+      margin: 22px 0;
+    }
+
+    .source {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 10px;
+      line-height: 1.25;
+    }
+
+    .text-right {
+      text-align: right;
+    }
+
+    .center {
+      text-align: center;
+    }
+
+    .align-end {
+      align-self: end;
+    }
+
+    .comparison-notes {
+      grid-template-columns: 1fr !important;
+      gap: 10px !important;
+      margin-top: 18px !important;
+    }
+
+    .comparison-notes .compact-card {
+      padding: 14px 18px;
+    }
+
+    .comparison-notes .compact-card h3 {
+      font-size: 18px;
+      line-height: 1.12;
+    }
+
+    .comparison-notes .compact-card p {
+      font-size: 14px;
+      line-height: 1.26;
+    }
+
+    @media (max-width: 900px) {
+      .slide {
+        padding: 28px;
+      }
+
+      h1 {
+        font-size: 46px;
+      }
+
+      h2 {
+        font-size: 34px;
+      }
+
+      .slide-grid,
+      .slide-grid.wide-left,
+      .slide-grid.wide-right,
+      .takeaways,
+      .roadmap,
+      .model-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="deck" aria-live="polite">
+    <section class="slide title-slide active" data-section="Opening" data-title="Forecasting Hourly Bike-Sharing Demand">
+      <div class="title-copy">
+        <div>
+          <div class="eyebrow animate">STAT 248 Final Project</div>
+          <h1 class="animate delay-1">Forecasting Hourly Bike-Sharing Demand</h1>
+          <p class="subtitle animate delay-2">Washington, DC Capital Bikeshare</p>
+          <p class="question animate delay-2">What temporal structure characterizes hourly bike-sharing demand, and how well can short-term demand be forecast from historical usage, calendar variables, and weather?</p>
+        </div>
+        <div>
+          <div class="author animate delay-2">
+            <span>Joshua Ren</span>
+            <span>May 2026</span>
+          </div>
+        </div>
+      </div>
+      <div class="title-visual">
+        <img src="../figures/hourly_demand_structure.png" alt="Hourly bike-sharing demand structure chart">
+      </div>
+    </section>
+
+    <section class="slide" data-section="Motivation" data-title="Hourly demand is an operations problem">
+      <div class="eyebrow animate">Motivation</div>
+      <h2 class="animate delay-1">Hourly demand is an operations problem, not just a forecasting exercise.</h2>
+      <div class="slide-grid wide-left">
+        <div class="animate delay-1">
+          <div class="big-number">157M</div>
+          <div class="unit">shared micromobility trips in the U.S. and Canada, 2023</div>
+          <p class="source">Source: National Association of City Transportation Officials, Shared Micromobility Report: 2023.</p>
+        </div>
+        <div class="animate delay-2">
+          <div class="flow">
+            <div class="flow-item"><strong>Hourly forecast</strong><span>Expected bike rentals by time of day</span></div>
+            <div class="arrow">→</div>
+            <div class="flow-item"><strong>Allocation</strong><span>Where bikes should be available</span></div>
+            <div class="arrow">→</div>
+            <div class="flow-item"><strong>Availability</strong><span>Fewer empty or overloaded stations</span></div>
+          </div>
+          <p class="body" style="margin-top: 24px;">Large hourly swings make station-based systems sensitive to under- and over-estimation.</p>
+        </div>
+      </div>
+      <div class="footer"><span>Bike-Sharing Demand Forecasting</span><div class="progress"><span></span></div></div>
+    </section>
+
+    <section class="slide" data-section="Roadmap" data-title="From structure to forecasts">
+      <div class="eyebrow animate">Roadmap</div>
+      <h2 class="animate delay-1">The project moves from temporal structure to model performance.</h2>
+      <div class="roadmap animate delay-2">
+        <div class="step"><span class="num">01</span><strong>Data</strong><p>Build a complete hourly series from raw Capital Bikeshare records.</p></div>
+        <div class="step"><span class="num">02</span><strong>EDA</strong><p>Identify demand scale, calendar pattern, weather effects, and dependence.</p></div>
+        <div class="step"><span class="num">03</span><strong>Models</strong><p>Compare classical, regression, and neural sequence methods.</p></div>
+        <div class="step"><span class="num">04</span><strong>Diagnostics</strong><p>Check residual spread, bias, and remaining autocorrelation.</p></div>
+        <div class="step"><span class="num">05</span><strong>Results</strong><p>Rank methods on validation and held-out test periods.</p></div>
+      </div>
+      <div class="footer"><span>Analysis Pipeline</span><div class="progress"><span></span></div></div>
+    </section>
+
+    <section class="slide" data-section="Data" data-title="Two years of hourly Capital Bikeshare demand">
+      <div class="eyebrow animate">Data</div>
+      <h2 class="animate delay-1">Two years of hourly Capital Bikeshare demand, calendar context, and weather.</h2>
+      <div class="slide-grid wide-left">
+        <div class="animate delay-1">
+          <div class="metric-row">
+            <div class="metric"><span class="value">17,379</span><span class="label">observed rows</span></div>
+            <div class="metric gold"><span class="value">2011-12</span><span class="label">time span</span></div>
+            <div class="metric copper"><span class="value">cnt</span><span class="label">response</span></div>
+          </div>
+          <div class="bullet-list">
+            <div class="bullet">Hourly file from the Bike Sharing Dataset.</div>
+            <div class="bullet">Response is total rentals per hour.</div>
+            <div class="bullet">Calendar and weather variables are used as predictors.</div>
+            <div class="bullet"><code>casual</code> and <code>registered</code> are excluded because they sum to the response.</div>
+          </div>
+        </div>
+        <div class="animate delay-2">
+          <table class="mini-table">
+            <thead><tr><th>Variable group</th><th>Examples</th></tr></thead>
+            <tbody>
+              <tr><td>Calendar</td><td class="muted">hour, weekday, holiday, working day, month, season</td></tr>
+              <tr><td>Weather</td><td class="muted">temperature, humidity, wind speed, weather condition</td></tr>
+              <tr><td>Demand</td><td class="muted">total hourly bike rentals</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="footer"><span>Data Source</span><div class="progress"><span></span></div></div>
+    </section>
+
+    <section class="slide" data-section="Preprocessing" data-title="Rebuilding a complete hourly series">
+      <div class="eyebrow animate">Preprocessing</div>
+      <h2 class="animate delay-1">The raw data are almost hourly; the modeling frame is fully hourly.</h2>
+      <div class="slide-grid">
+        <div class="animate delay-1">
+          <div class="metric-row">
+            <div class="metric"><span class="value">17,544</span><span class="label">expected hours</span></div>
+            <div class="metric copper"><span class="value">165</span><span class="label">missing timestamps</span></div>
+            <div class="metric gold"><span class="value">0</span><span class="label">missing after prep</span></div>
+          </div>
+          <div class="gold-rule"></div>
+          <p class="claim">Complete hourly indexing prevents irregular gaps from becoming hidden modeling assumptions.</p>
+        </div>
+        <div class="animate delay-2">
+          <div class="flow" style="grid-template-columns: 1fr 34px 1fr 34px 1fr;">
+            <div class="flow-item"><strong>Raw rows</strong><span>Observed timestamps from <code>hour.csv</code></span></div>
+            <div class="arrow">→</div>
+            <div class="flow-item"><strong>Hourly grid</strong><span>Reindex to full hourly range</span></div>
+            <div class="arrow">→</div>
+            <div class="flow-item"><strong>Model frame</strong><span>Interpolate continuous fields, fill weather category</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="footer"><span>Complete Time Index</span><div class="progress"><span></span></div></div>
+    </section>
+
+    <section class="slide" data-section="EDA" data-title="Demand is skewed and seasonal">
+      <div class="eyebrow animate">Exploratory Analysis</div>
+      <h2 class="animate delay-1">Demand is skewed, noisy hour to hour, and seasonal across the two years.</h2>
+      <div class="slide-grid wide-right">
+        <div class="callout animate delay-1">
+          <p class="claim">Peak hours are much larger than ordinary hours.</p>
+          <div class="bullet-list">
+            <div class="bullet">Right-skewed hourly counts motivate a log scale.</div>
+            <div class="bullet">Daily averages move over season and year.</div>
+            <div class="bullet">Models need both short-run and calendar structure.</div>
+          </div>
+        </div>
+        <div class="figure-wrap animate delay-2">
+          <img src="../figures/eda_demand_scale.png" alt="Demand distribution and daily average demand">
+        </div>
+      </div>
+      <div class="footer"><span>Demand Scale</span><div class="progress"><span></span></div></div>
+    </section>
+
+    <section class="slide" data-section="EDA" data-title="Calendar timing drives demand shape">
+      <div class="eyebrow animate">Calendar Pattern</div>
+      <h2 class="animate delay-1">Calendar timing drives the shape of demand.</h2>
+      <div class="full-figure short figure-wrap animate delay-2">
+        <img src="../figures/eda_calendar_patterns.png" alt="Monthly, weekday-hour, and working-day demand patterns">
+      </div>
+      <div class="chip-row animate delay-2">
+        <span class="chip">warmer months are higher</span>
+        <span class="chip">working days show commute peaks</span>
+        <span class="chip">non-working days shift toward midday</span>
+        <span class="chip">24h and 168h history become natural predictors</span>
+      </div>
+      <div class="footer"><span>Calendar Structure</span><div class="progress"><span></span></div></div>
+    </section>
+
+    <section class="slide" data-section="EDA" data-title="Weather helps, but it is not the whole story">
+      <div class="eyebrow animate">Weather Pattern</div>
+      <h2 class="animate delay-1">Weather helps explain demand, but it does not replace temporal history.</h2>
+      <div class="slide-grid wide-right">
+        <div class="animate delay-1">
+          <div class="compact-card">
+            <div class="kicker">Observed relationships</div>
+            <div class="bullet-list">
+              <div class="bullet">Temperature generally increases demand.</div>
+              <div class="bullet">High humidity reduces median demand.</div>
+              <div class="bullet">Wind speed is weaker and noisier.</div>
+              <div class="bullet">Rain or snow lowers demand sharply.</div>
+            </div>
+          </div>
+        </div>
+        <div class="figure-wrap animate delay-2">
+          <img src="../figures/eda_weather_pattern.png" alt="Weather relationships with bike demand">
+        </div>
+      </div>
+      <div class="footer"><span>Weather Covariates</span><div class="progress"><span></span></div></div>
+    </section>
+
+    <section class="slide" data-section="EDA" data-title="Log scale stabilizes the modeling target">
+      <div class="eyebrow animate">Scale Choice</div>
+      <h2 class="animate delay-1">The log scale makes the modeling target more stable.</h2>
+      <div class="slide-grid wide-right">
+        <div class="callout animate delay-1">
+          <p class="claim">Raw count variance rises with the mean.</p>
+          <p class="body">For lagged regression, RNN, and LSTM, the models train on log demand and predictions are converted back to counts before evaluation.</p>
+          <div class="chip-row">
+            <span class="chip">train on log demand</span>
+            <span class="chip">score in original counts</span>
+          </div>
+        </div>
+        <div class="figure-wrap animate delay-2">
+          <img src="../figures/eda_mean_variance_check.png" alt="Mean-variance relationship on raw and log scale">
+        </div>
+      </div>
+      <div class="footer"><span>Mean-Variance Check</span><div class="progress"><span></span></div></div>
+    </section>
+
+    <section class="slide" data-section="EDA" data-title="Demand repeats across hours, days, and weeks">
+      <div class="eyebrow animate">Dependence Structure</div>
+      <h2 class="animate delay-1">Demand repeats across recent hours, yesterday, and last week.</h2>
+      <div class="slide-grid wide-right">
+        <div class="animate delay-1">
+          <div class="metric-row">
+            <div class="metric"><span class="value">0.90</span><span class="label">lag 1 autocorr.</span></div>
+            <div class="metric gold"><span class="value">0.87</span><span class="label">lag 24 autocorr.</span></div>
+            <div class="metric copper"><span class="value">0.91</span><span class="label">lag 168 autocorr.</span></div>
+          </div>
+          <p class="body" style="margin-top: 22px;">These three numbers are the backbone of the modeling strategy: short-run, daily, and weekly history all matter.</p>
+        </div>
+        <div class="figure-wrap animate delay-2">
+          <img src="../figures/eda_acf_pacf_diagnostics.png" alt="ACF and PACF diagnostics">
+        </div>
+      </div>
+      <div class="footer"><span>ACF / PACF</span><div class="progress"><span></span></div></div>
+    </section>
+
+    <section class="slide" data-section="EDA" data-title="The daily cycle dominates the frequency view">
+      <div class="eyebrow animate">Frequency Domain</div>
+      <h2 class="animate delay-1">The frequency view confirms the daily cycle is the dominant rhythm.</h2>
+      <div class="slide-grid wide-right">
+        <div class="callout animate delay-1">
+          <p class="claim">24-hour differencing directly targets the main daily peak.</p>
+          <div class="bullet-list">
+            <div class="bullet">First differencing leaves the daily cycle visible.</div>
+            <div class="bullet">24-hour differencing reduces it more clearly.</div>
+            <div class="bullet">This becomes the ARIMA benchmark transformation.</div>
+          </div>
+        </div>
+        <div class="figure-wrap animate delay-2">
+          <img src="../figures/eda_welch_periodograms.png" alt="Welch periodograms before and after differencing">
+        </div>
+      </div>
+      <div class="footer"><span>Periodogram</span><div class="progress"><span></span></div></div>
+    </section>
+
+    <section class="slide" data-section="Modeling" data-title="Evaluation mimics forecasting forward in time">
+      <div class="eyebrow animate">Modeling Setup</div>
+      <h2 class="animate delay-1">Evaluation mimics forecasting forward in time.</h2>
+      <div class="split animate delay-2">
+        <div class="split-track">
+          <div class="segment seg-train">60% Train</div>
+          <div class="gap">168h</div>
+          <div class="segment seg-valid">20% Validation</div>
+          <div class="gap">168h</div>
+          <div class="segment seg-test">20% Test</div>
+        </div>
+      </div>
+      <div class="slide-grid three" style="height: auto; margin-top: 34px;">
+        <div class="compact-card"><div class="kicker">Selection</div><h3>Validation period</h3><p>Model order, window length, and tuning choices are made before test evaluation.</p></div>
+        <div class="compact-card"><div class="kicker">Leakage control</div><h3>One-week gaps</h3><p>The 168-hour gaps reduce leakage from long lagged features.</p></div>
+        <div class="compact-card"><div class="kicker">Scoring</div><h3>MAE and RMSE</h3><p>Every model is compared on the original hourly rental count scale.</p></div>
+      </div>
+      <div class="footer"><span>Train / Validation / Test</span><div class="progress"><span></span></div></div>
+    </section>
+
+    <section class="slide" data-section="Models" data-title="ARIMA is the demand-history benchmark">
+      <div class="eyebrow animate">Classical Benchmark</div>
+      <h2 class="animate delay-1">ARIMA is the demand-history benchmark.</h2>
+      <div class="slide-grid wide-right">
+        <div class="animate delay-1">
+          <p class="claim">Use 24-hour differencing, then search low-order ARMA candidates.</p>
+          <div class="metric-row">
+            <div class="metric"><span class="value">2,0,2</span><span class="label">selected order</span></div>
+            <div class="metric gold"><span class="value">83.5</span><span class="label">validation RMSE</span></div>
+            <div class="metric copper"><span class="value">84.2</span><span class="label">test RMSE</span></div>
+          </div>
+        </div>
+        <div class="figure-wrap animate delay-2">
+          <img src="../figures/model_arima_order_search.png" alt="ARIMA order search">
+        </div>
+      </div>
+      <div class="footer"><span>ARIMA</span><div class="progress"><span></span></div></div>
+    </section>
+
+    <section class="slide" data-section="Diagnostics" data-title="ARIMA diagnostics show what is still missing">
+      <div class="eyebrow animate">Diagnostics</div>
+      <h2 class="animate delay-1">ARIMA diagnostics show what is still missing.</h2>
+      <div class="slide-grid wide-right">
+        <div class="animate delay-1">
+          <div class="diag-grid">
+            <div class="diag-card"><strong>Over time</strong><span>Checks drift, clustering, or long periods of bias.</span></div>
+            <div class="diag-card"><strong>Versus fitted</strong><span>Checks changing spread and missed high-demand hours.</span></div>
+            <div class="diag-card"><strong>QQ plot</strong><span>Checks heavy tails and non-normal residual shape.</span></div>
+            <div class="diag-card"><strong>Residual ACF</strong><span>Checks whether time dependence remains in errors.</span></div>
+          </div>
+          <div class="metric-row">
+            <div class="metric copper"><span class="value">0.44</span><span class="label">residual ACF at lag 168</span></div>
+          </div>
+        </div>
+        <div class="figure-wrap diagnostic-figure animate delay-2">
+          <img src="../figures/diagnostic_arima_validation.png" alt="ARIMA validation residual diagnostics">
+        </div>
+      </div>
+      <div class="footer"><span>Residual Checks</span><div class="progress"><span></span></div></div>
+    </section>
+
+    <section class="slide" data-section="Models" data-title="SARIMAX adds covariates, but weekly dependence remains">
+      <div class="eyebrow animate">Classical Extension</div>
+      <h2 class="animate delay-1">SARIMAX adds covariates, but weekly dependence remains.</h2>
+      <div class="slide-grid wide-right">
+        <div class="animate delay-1">
+          <div class="metric-row">
+            <div class="metric"><span class="value">80.9</span><span class="label">validation RMSE</span></div>
+            <div class="metric copper"><span class="value">81.3</span><span class="label">test RMSE</span></div>
+            <div class="metric gold"><span class="value">0.50</span><span class="label">lag 168 residual ACF</span></div>
+          </div>
+          <div class="bullet-list">
+            <div class="bullet">Weather, working day, holiday, year, and cyclic calendar terms are added.</div>
+            <div class="bullet">Daily residual autocorrelation improves.</div>
+            <div class="bullet">Weekly residual dependence is still large.</div>
+          </div>
+        </div>
+        <div class="figure-wrap diagnostic-figure animate delay-2">
+          <img src="../figures/diagnostic_sarimax_validation.png" alt="SARIMAX validation residual diagnostics">
+        </div>
+      </div>
+      <div class="footer"><span>SARIMAX</span><div class="progress"><span></span></div></div>
+    </section>
+
+    <section class="slide" data-section="Models" data-title="Lagged regression makes the EDA explicit">
+      <div class="eyebrow animate">Interpretable Feature Model</div>
+      <h2 class="animate delay-1">Lagged regression makes the EDA explicit.</h2>
+      <div class="slide-grid wide-left">
+        <div class="animate delay-1">
+          <p class="claim">The model uses short-run, daily, and weekly lags together with calendar and weather predictors.</p>
+          <div class="chip-row">
+            <span class="chip">lag 1 positive/significant</span>
+            <span class="chip">lag 24 positive/significant</span>
+            <span class="chip">lag 168 positive/significant</span>
+            <span class="chip">temperature positive</span>
+            <span class="chip">humidity negative</span>
+          </div>
+          <div class="metric-row">
+            <div class="metric gold"><span class="value">65.7</span><span class="label">validation RMSE</span></div>
+            <div class="metric copper"><span class="value">59.4</span><span class="label">test RMSE</span></div>
+          </div>
+        </div>
+        <div class="figure-wrap diagnostic-figure animate delay-2">
+          <img src="../figures/diagnostic_lagged_regression_validation.png" alt="Lagged regression residual diagnostics">
+        </div>
+      </div>
+      <div class="footer"><span>Lagged Regression</span><div class="progress"><span></span></div></div>
+    </section>
+
+    <section class="slide" data-section="Models" data-title="Poisson helps, but counts are overdispersed">
+      <div class="eyebrow animate">Count Model Extension</div>
+      <h2 class="animate delay-1">Poisson regression helps, but the counts are overdispersed.</h2>
+      <div class="slide-grid wide-left">
+        <div class="animate delay-1">
+          <div class="big-number" style="font-size: 98px;">7.14</div>
+          <div class="unit">Pearson dispersion statistic</div>
+          <p class="body" style="margin-top: 20px;">A plain Poisson model assumes conditional mean equals conditional variance. Here the variance is much larger.</p>
+          <div class="metric-row">
+            <div class="metric"><span class="value">62.1</span><span class="label">validation RMSE</span></div>
+            <div class="metric copper"><span class="value">57.8</span><span class="label">test RMSE</span></div>
+          </div>
+        </div>
+        <div class="figure-wrap diagnostic-figure animate delay-2">
+          <img src="../figures/diagnostic_poisson_lagged_regression_validation.png" alt="Poisson lagged regression residual diagnostics">
+        </div>
+      </div>
+      <div class="footer"><span>Poisson Lagged Regression</span><div class="progress"><span></span></div></div>
+    </section>
+
+    <section class="slide" data-section="Models" data-title="RNN learns from a rolling history window">
+      <div class="eyebrow animate">Neural Sequence Model</div>
+      <h2 class="animate delay-1">RNN learns from a rolling history window instead of fixed lag columns.</h2>
+      <div class="slide-grid wide-right">
+        <div class="animate delay-1">
+          <div class="metric-row">
+            <div class="metric"><span class="value">72h</span><span class="label">selected window</span></div>
+            <div class="metric gold"><span class="value">55.4</span><span class="label">validation RMSE</span></div>
+            <div class="metric copper"><span class="value">55.2</span><span class="label">test RMSE</span></div>
+          </div>
+          <table class="mini-table" style="margin-top: 18px;">
+            <thead><tr><th>Window</th><th>Validation RMSE</th><th>Test RMSE</th></tr></thead>
+            <tbody>
+              <tr><td>72h</td><td>55.4</td><td>55.2</td></tr>
+              <tr><td class="muted">24h</td><td class="muted">55.5</td><td class="muted">55.3</td></tr>
+              <tr><td class="muted">168h</td><td class="muted">55.6</td><td class="muted">55.2</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="figure-wrap animate delay-2">
+          <img src="../figures/diagnostic_rnn_training.png" alt="RNN training history">
+        </div>
+      </div>
+      <div class="footer"><span>RNN</span><div class="progress"><span></span></div></div>
+    </section>
+
+    <section class="slide" data-section="Models" data-title="LSTM gives the strongest forecasts">
+      <div class="eyebrow animate">Gated Sequence Model</div>
+      <h2 class="animate delay-1">LSTM gives the strongest forecasts in validation and remains strong on test.</h2>
+      <div class="slide-grid wide-right">
+        <div class="animate delay-1">
+          <div class="metric-row">
+            <div class="metric"><span class="value">72h</span><span class="label">selected window</span></div>
+            <div class="metric gold"><span class="value">43.5</span><span class="label">validation RMSE</span></div>
+            <div class="metric copper"><span class="value">43.9</span><span class="label">test RMSE</span></div>
+          </div>
+          <div class="bullet-list">
+            <div class="bullet">Gated memory improves nonlinear sequence learning.</div>
+            <div class="bullet">Residual spread is the smallest among fitted models.</div>
+            <div class="bullet">Daily and weekly residual autocorrelation are reduced, not eliminated.</div>
+          </div>
+        </div>
+        <div class="figure-wrap animate delay-2">
+          <img src="../figures/diagnostic_lstm_training.png" alt="LSTM training history">
+        </div>
+      </div>
+      <div class="footer"><span>LSTM</span><div class="progress"><span></span></div></div>
+    </section>
+
+    <section class="slide" data-section="Results" data-title="Sequence models win the final comparison">
+      <div class="eyebrow animate">Model Comparison</div>
+      <h2 class="animate delay-1">Sequence models win the final comparison, with LSTM clearly ahead.</h2>
+      <div class="slide-grid wide-left">
+        <div class="bar-panel animate delay-1">
+          <div class="bar-row"><span>ARIMA</span><div class="bar-track"><div class="bar-fill" style="width: 100%;"></div></div><span class="bar-value">84.2</span></div>
+          <div class="bar-row"><span>SARIMAX</span><div class="bar-track"><div class="bar-fill" style="width: 96.5%;"></div></div><span class="bar-value">81.3</span></div>
+          <div class="bar-row"><span>Lagged Regression</span><div class="bar-track"><div class="bar-fill" style="width: 70.6%;"></div></div><span class="bar-value">59.4</span></div>
+          <div class="bar-row"><span>Poisson Lagged</span><div class="bar-track"><div class="bar-fill" style="width: 68.6%;"></div></div><span class="bar-value">57.8</span></div>
+          <div class="bar-row"><span>RNN</span><div class="bar-track"><div class="bar-fill" style="width: 65.5%;"></div></div><span class="bar-value">55.2</span></div>
+          <div class="bar-row"><span>LSTM</span><div class="bar-track"><div class="bar-fill best" style="width: 52.1%;"></div></div><span class="bar-value">43.9</span></div>
+          <p class="source">Test RMSE, lower is better.</p>
+        </div>
+        <div class="animate delay-2">
+          <p class="claim">The biggest gains come from representing temporal history directly.</p>
+          <div class="model-grid comparison-notes">
+            <div class="compact-card"><div class="kicker">Classical</div><h3>Stable baseline</h3><p>Useful reference point, but misses repeated weekly structure.</p></div>
+            <div class="compact-card"><div class="kicker">Lagged regression</div><h3>Interpretable improvement</h3><p>Explicit lags make the EDA operational.</p></div>
+            <div class="compact-card"><div class="kicker">Neural sequence</div><h3>Best forecast accuracy</h3><p>Rolling history windows capture nonlinear hourly behavior.</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="footer"><span>Final Ranking</span><div class="progress"><span></span></div></div>
+    </section>
+
+    <section class="slide" data-section="Results" data-title="Forecast errors concentrate around peaks">
+      <div class="eyebrow animate">Forecast Interpretation</div>
+      <h2 class="animate delay-1">Most models capture the daily cycle; peak timing and magnitude are harder.</h2>
+      <div class="two-figures forecast-layout animate delay-2">
+        <div class="figure-wrap static-forecast">
+          <img src="../figures/analysis_forecast_comparison.png" alt="Forecast comparison on test period">
+        </div>
+        <div class="iframe-wrap" title="Interactive forecast comparison">
+          <iframe src="../figures/analysis_interactive_forecast_comparison.html" loading="lazy"></iframe>
+        </div>
+      </div>
+      <div class="chip-row animate delay-2">
+        <span class="chip">broad daily cycle captured</span>
+        <span class="chip">classical models are smoother</span>
+        <span class="chip">RNN/LSTM track peaks more closely</span>
+      </div>
+      <div class="footer"><span>Actual vs Predicted</span><div class="progress"><span></span></div></div>
+    </section>
+
+    <section class="slide" data-section="Conclusion" data-title="Takeaways and next steps">
+      <div class="eyebrow animate">Conclusion</div>
+      <h2 class="animate delay-1">Hourly bike demand is forecastable because it is structured.</h2>
+      <div class="takeaways animate delay-2">
+        <div class="takeaway">
+          <div>
+            <span class="label">Structure</span>
+            <strong>History carries the signal.</strong>
+            <p>Demand repeats across recent hours, daily cycles, weekly rhythms, working-day behavior, seasonality, and weather.</p>
+          </div>
+        </div>
+        <div class="takeaway">
+          <div>
+            <span class="label">Best model</span>
+            <strong>LSTM, 72-hour window.</strong>
+            <p>It gives the lowest validation RMSE and remains strong on the held-out test period.</p>
+          </div>
+        </div>
+        <div class="takeaway">
+          <div>
+            <span class="label">Next steps</span>
+            <strong>Model uncertainty and location.</strong>
+            <p>Natural extensions are negative binomial forecasts, probabilistic intervals, and station-level spatial demand.</p>
+          </div>
+        </div>
+      </div>
+      <div class="footer"><span>Thank you</span><div class="progress"><span></span></div></div>
+    </section>
+  </main>
+
+  <div class="controls" aria-label="Slide controls">
+    <button class="nav-button" id="prev" type="button" title="Previous slide" aria-label="Previous slide">‹</button>
+    <button class="nav-button" id="next" type="button" title="Next slide" aria-label="Next slide">›</button>
+  </div>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll(".slide"));
+    let current = 0;
+
+    function showSlide(index) {
+      current = Math.max(0, Math.min(index, slides.length - 1));
+      slides.forEach((slide, i) => {
+        slide.classList.toggle("active", i === current);
+        const progress = slide.querySelector(".progress span");
+        if (progress) {
+          progress.style.setProperty("--progress", `${((current + 1) / slides.length) * 100}%`);
+        }
+      });
+      document.title = `${current + 1}/${slides.length} · ${slides[current].dataset.title || "Bike-Sharing Demand Forecasting"}`;
+    }
+
+    function nextSlide() {
+      showSlide(current + 1);
+    }
+
+    function prevSlide() {
+      showSlide(current - 1);
+    }
+
+    document.getElementById("next").addEventListener("click", nextSlide);
+    document.getElementById("prev").addEventListener("click", prevSlide);
+
+    window.addEventListener("keydown", (event) => {
+      if (["ArrowRight", "PageDown", " "].includes(event.key)) {
+        event.preventDefault();
+        nextSlide();
+      }
+      if (["ArrowLeft", "PageUp", "Backspace"].includes(event.key)) {
+        event.preventDefault();
+        prevSlide();
+      }
+      if (event.key === "Home") {
+        showSlide(0);
+      }
+      if (event.key === "End") {
+        showSlide(slides.length - 1);
+      }
+    });
+
+    showSlide(0);
+  </script>
+</body>
+</html>
