@@ -485,6 +485,54 @@
       text-align: center;
     }
 
+    .motivation-slide h2 {
+      margin-top: 18px;
+    }
+
+    .motivation-content {
+      height: calc(100% - 178px);
+      margin-top: 52px;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .stat-line {
+      display: flex;
+      align-items: baseline;
+      gap: 24px;
+    }
+
+    .stat-line .unit {
+      max-width: none;
+      margin-top: 0;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+
+    .motivation-flow {
+      margin-top: 0;
+      grid-template-columns: 1fr 44px 1fr 44px 1fr;
+      gap: 16px;
+      align-self: start;
+    }
+
+    .motivation-flow .flow-item {
+      min-height: 132px;
+      padding: 22px 24px;
+    }
+
+    .motivation-flow .flow-item strong {
+      font-size: 23px;
+      white-space: nowrap;
+    }
+
+    .motivation-flow .flow-item span {
+      font-size: 16px;
+      white-space: nowrap;
+    }
+
     .roadmap {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
@@ -965,22 +1013,24 @@
       </div>
     </section>
 
-    <section class="slide" data-section="Motivation" data-title="Hourly demand is an operations problem">
+    <section class="slide motivation-slide" data-section="Motivation" data-title="Hourly demand is an operations problem">
       <div class="eyebrow animate">Motivation</div>
-      <h2 class="animate delay-1">Hourly demand is an operations problem, not just a forecasting exercise.</h2>
-      <div class="slide-grid wide-left">
+      <h2 class="animate delay-1">Hourly demand is an operations problem,<br>not just a forecasting exercise.</h2>
+      <div class="motivation-content">
         <div class="animate delay-1">
+          <div class="stat-line">
           <div class="big-number">157M</div>
           <div class="unit">shared micromobility trips in the U.S. and Canada, 2023</div>
+          </div>
           <p class="source">Source: National Association of City Transportation Officials, Shared Micromobility Report: 2023.</p>
         </div>
         <div class="animate delay-2">
-          <div class="flow">
-            <div class="flow-item"><strong>Hourly forecast</strong><span>Expected bike rentals by time of day</span></div>
+          <div class="flow motivation-flow">
+            <div class="flow-item"><strong>Hourly forecast</strong><span>Expected rentals by hour</span></div>
             <div class="arrow">→</div>
-            <div class="flow-item"><strong>Allocation</strong><span>Where bikes should be available</span></div>
+            <div class="flow-item"><strong>Allocation</strong><span>Where bikes should be</span></div>
             <div class="arrow">→</div>
-            <div class="flow-item"><strong>Availability</strong><span>Fewer empty or overloaded stations</span></div>
+            <div class="flow-item"><strong>Availability</strong><span>Fewer empty or full stations</span></div>
           </div>
           <p class="body" style="margin-top: 24px;">Large hourly swings make station-based systems sensitive to under- and over-estimation.</p>
         </div>
