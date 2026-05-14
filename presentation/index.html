@@ -507,7 +507,7 @@
     }
 
     .acf-card .label {
-      margin-top: 0px;
+      margin-top: 8px;
       color: var(--muted);
       font-size: 10.8px;
       line-height: 1.15;
@@ -535,10 +535,87 @@
 
     .diff-card span {
       display: block;
-      margin-top: 0px;
+      margin-top: 8px;
       color: var(--muted);
       font-size: 17px;
       line-height: 1.28;
+    }
+
+    .slide-grid.wide-right.frequency-layout {
+      grid-template-columns: 0.9fr 1fr;
+      align-items: start;
+      height: calc(100% - 132px);
+      margin-top: 24px;
+      gap: 12px;
+    }
+
+    .frequency-panel {
+      display: grid;
+      gap: 14px;
+      align-self: start;
+      margin-top: 8px;
+    }
+
+    .frequency-card,
+    .implication-card {
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+
+    .frequency-card {
+      min-height: 164px;
+      padding: 22px 24px;
+    }
+
+    .frequency-card strong {
+      display: block;
+      color: var(--blue);
+      margin-top: 6px;
+      font-size: 24px;
+      line-height: 1.15;
+    }
+
+    .frequency-card span {
+      display: block;
+      margin-top: 24px;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.32;
+    }
+
+    .implication-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .implication-card {
+      min-height: 86px;
+      padding: 16px 18px;
+      display: grid;
+      grid-template-columns: 112px 1fr;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .implication-card strong {
+      color: var(--gold);
+      font-size: 15px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .implication-card span {
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.25;
+    }
+
+    .frequency-layout .figure-wrap {
+      align-self: start;
+      justify-self: center;
+      width: 90%;
+      margin-top: 8px;
     }
 
     .title-slide {
@@ -813,6 +890,39 @@
       letter-spacing: 0.7px;
     }
 
+    .modeling-setup .split {
+      margin-top: 90px;
+    }
+
+    .modeling-setup .split-track {
+      height: 118px;
+    }
+
+    .modeling-cards {
+      height: 220px !important;
+      margin-top: 34px !important;
+      gap: 20px !important;
+      align-items: stretch;
+    }
+
+    .modeling-cards .compact-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 24px 24px;
+    }
+
+    .modeling-cards .compact-card h3 {
+      color: var(--blue);
+      font-size: 21px;
+      line-height: 1.14;
+    }
+
+    .modeling-cards .compact-card p {
+      font-size: 16.5px;
+      line-height: 1.34;
+    }
+
     .preprocess-content {
       height: calc(100% - 165px);
       margin-top: 30px;
@@ -898,6 +1008,109 @@
     .model-card h3 {
       color: var(--blue);
       font-size: 24px;
+    }
+
+    .slide-grid.wide-right.arima-layout {
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 24px;
+      align-items: start;
+      height: calc(100% - 130px);
+      margin-top: 48px;
+    }
+
+    .arima-panel {
+      display: grid;
+      gap: 14px;
+      align-self: start;
+    }
+
+    .arima-setting,
+    .arima-reason {
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+
+    .arima-setting {
+      min-height: 150px;
+      padding: 22px 24px;
+    }
+
+    .arima-kicker {
+      color: var(--gold);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.15px;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .arima-setting strong {
+      display: block;
+      color: var(--blue);
+      font-size: 21px;
+      line-height: 1.14;
+    }
+
+    .arima-setting span {
+      display: block;
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.32;
+    }
+
+    .arima-reasons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .arima-reason {
+      min-height: 124px;
+      padding: 18px;
+    }
+
+    .arima-reason strong {
+      display: block;
+      color: var(--blue);
+      font-size: 20px;
+      line-height: 1.16;
+    }
+
+    .arima-reason span {
+      display: block;
+      margin-top: 9px;
+      color: var(--muted);
+      font-size: 15.5px;
+      line-height: 1.28;
+    }
+
+    .arima-metrics {
+      margin-top: 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .arima-metrics .metric {
+      min-width: 0;
+      min-height: 124px;
+      padding: 16px 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .arima-metrics .metric .value {
+      font-size: 34px;
+    }
+
+    .slide-grid.wide-right.arima-layout .figure-wrap {
+      align-self: start;
+      aspect-ratio: auto;
+      height: 450px;
+      margin-top: 0;
     }
 
     .model-card ul {
@@ -1120,6 +1333,144 @@
       color: var(--muted);
       font-size: 14px;
       line-height: 1.3;
+    }
+
+    .slide-grid.wide-right.arima-diagnostic-layout {
+      height: calc(100% - 126px);
+      margin-top: 56px;
+      align-items: start;
+    }
+
+    .slide-grid.wide-right.arima-diagnostic-layout.sarimax-layout {
+      margin-top: 48px;
+    }
+
+    .arima-diagnostic-panel {
+      display: grid;
+      gap: 18px;
+      align-self: start;
+    }
+
+    .arima-diagnostic-panel .diag-grid {
+      gap: 16px;
+    }
+
+    .arima-diagnostic-panel .diag-card {
+      min-height: 146px;
+      padding: 20px;
+    }
+
+    .arima-diagnostic-panel .diag-card strong {
+      font-size: 19px;
+    }
+
+    .arima-diagnostic-panel .diag-card span {
+      font-size: 15.5px;
+      line-height: 1.32;
+    }
+
+    .diagnostic-summary {
+      display: grid;
+      grid-template-columns: 0.58fr 1fr;
+      gap: 14px;
+    }
+
+    .diagnostic-summary .metric {
+      min-width: 0;
+      min-height: 120px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .diagnostic-note {
+      min-height: 120px;
+      padding: 18px 20px;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .diagnostic-note strong {
+      color: var(--blue);
+      font-size: 19px;
+      line-height: 1.16;
+    }
+
+    .diagnostic-note span {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.28;
+    }
+
+    .slide-grid.wide-right.arima-diagnostic-layout .figure-wrap {
+      aspect-ratio: auto;
+      height: 452px;
+      align-self: start;
+    }
+
+    .slide-grid.wide-right.arima-diagnostic-layout .diagnostic-figure img {
+      transform: none;
+    }
+
+    .sarimax-panel {
+      display: grid;
+      gap: 16px;
+      align-self: start;
+    }
+
+    .sarimax-metrics {
+      margin-top: 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .sarimax-metrics .metric {
+      min-width: 0;
+      min-height: 124px;
+      padding: 16px 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .sarimax-metrics .metric .value {
+      font-size: 32px;
+    }
+
+    .sarimax-detail-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .sarimax-detail-card {
+      min-height: 96px;
+      padding: 16px 18px;
+      display: grid;
+      grid-template-columns: 128px 1fr;
+      gap: 16px;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+
+    .sarimax-detail-card strong {
+      color: var(--blue);
+      font-size: 18px;
+      line-height: 1.14;
+    }
+
+    .sarimax-detail-card span {
+      color: var(--muted);
+      font-size: 15.5px;
+      line-height: 1.28;
     }
 
     .two-figures {
@@ -1537,13 +1888,16 @@
     <section class="slide" data-section="EDA" data-title="The daily cycle dominates the frequency view">
       <div class="eyebrow animate">Frequency Domain</div>
       <h2 class="animate delay-1">The frequency view confirms the daily cycle is the dominant rhythm.</h2>
-      <div class="slide-grid wide-right">
-        <div class="callout animate delay-1">
-          <p class="claim">24-hour differencing directly targets the main daily peak.</p>
-          <div class="bullet-list">
-            <div class="bullet">First differencing leaves the daily cycle visible.</div>
-            <div class="bullet">24-hour differencing reduces it more clearly.</div>
-            <div class="bullet">This becomes the ARIMA benchmark transformation.</div>
+      <div class="slide-grid wide-right frequency-layout">
+        <div class="frequency-panel animate delay-1">
+          <div class="frequency-card">
+            <strong>Daily frequency is the dominant peak.</strong>
+            <span>After 24-hour differencing, that daily peak is reduced much more clearly than with first differencing.</span>
+          </div>
+          <div class="implication-list">
+            <div class="implication-card"><strong>ARIMA</strong><span>Use 24-hour differencing.</span></div>
+            <div class="implication-card"><strong>Regression</strong><span>Use lags 1, 2, 3, 24, and 168.</span></div>
+            <div class="implication-card"><strong>Neural</strong><span>Test history windows of 24, 72, and 168 hours.</span></div>
           </div>
         </div>
         <div class="figure-wrap aspect-frame animate delay-2" style="--ratio: 1.25;">
@@ -1553,7 +1907,7 @@
       <div class="footer"><span>Periodogram</span><div class="progress"><span></span></div></div>
     </section>
 
-    <section class="slide" data-section="Modeling" data-title="Evaluation mimics forecasting forward in time">
+    <section class="slide modeling-setup" data-section="Modeling" data-title="Evaluation mimics forecasting forward in time">
       <div class="eyebrow animate">Modeling Setup</div>
       <h2 class="animate delay-1">Evaluation mimics forecasting forward in time.</h2>
       <div class="split animate delay-2">
@@ -1565,7 +1919,7 @@
           <div class="segment seg-test">20% Test</div>
         </div>
       </div>
-      <div class="slide-grid three" style="height: auto; margin-top: 34px;">
+      <div class="slide-grid three modeling-cards" style="height: auto; margin-top: 34px;">
         <div class="compact-card"><div class="kicker">Selection</div><h3>Validation period</h3><p>Model order, window length, and tuning choices are made before test evaluation.</p></div>
         <div class="compact-card"><div class="kicker">Leakage control</div><h3>One-week gaps</h3><p>The 168-hour gaps reduce leakage from long lagged features.</p></div>
         <div class="compact-card"><div class="kicker">Scoring</div><h3>MAE and RMSE</h3><p>Every model is compared on the original hourly rental count scale.</p></div>
@@ -1576,10 +1930,18 @@
     <section class="slide" data-section="Models" data-title="ARIMA is the demand-history benchmark">
       <div class="eyebrow animate">Classical Benchmark</div>
       <h2 class="animate delay-1">ARIMA is the demand-history benchmark.</h2>
-      <div class="slide-grid wide-right">
-        <div class="animate delay-1">
-          <p class="claim">Use 24-hour differencing, then search low-order ARMA candidates.</p>
-          <div class="metric-row">
+      <div class="slide-grid wide-right arima-layout">
+        <div class="arima-panel animate delay-1">
+          <div class="arima-setting">
+            <div class="arima-kicker">Setting</div>
+            <strong>Fitted on past demands after 24-hour differencing</strong>
+            <span>This makes ARIMA the classical demand-history benchmark, without weather or calendar covariates.</span>
+          </div>
+          <div class="arima-reasons">
+            <div class="arima-reason"><strong>MA terms up to 2</strong><span>ACF remains visible at the first few lags.</span></div>
+            <div class="arima-reason"><strong>AR terms up to 3</strong><span>PACF stays noticeable through about lag 3.</span></div>
+          </div>
+          <div class="metric-row arima-metrics">
             <div class="metric"><span class="value">2,0,2</span><span class="label">selected order</span></div>
             <div class="metric gold"><span class="value">83.5</span><span class="label">validation RMSE</span></div>
             <div class="metric copper"><span class="value">84.2</span><span class="label">test RMSE</span></div>
@@ -1595,16 +1957,17 @@
     <section class="slide" data-section="Diagnostics" data-title="ARIMA diagnostics show what is still missing">
       <div class="eyebrow animate">Diagnostics</div>
       <h2 class="animate delay-1">ARIMA diagnostics show what is still missing.</h2>
-      <div class="slide-grid wide-right">
-        <div class="animate delay-1">
+      <div class="slide-grid wide-right arima-diagnostic-layout">
+        <div class="arima-diagnostic-panel animate delay-1">
           <div class="diag-grid">
             <div class="diag-card"><strong>Over time</strong><span>Checks drift, clustering, or long periods of bias.</span></div>
             <div class="diag-card"><strong>Versus fitted</strong><span>Checks changing spread and missed high-demand hours.</span></div>
             <div class="diag-card"><strong>QQ plot</strong><span>Checks heavy tails and non-normal residual shape.</span></div>
             <div class="diag-card"><strong>Residual ACF</strong><span>Checks whether time dependence remains in errors.</span></div>
           </div>
-          <div class="metric-row">
+          <div class="diagnostic-summary">
             <div class="metric copper"><span class="value">0.44</span><span class="label">residual ACF at lag 168</span></div>
+            <div class="diagnostic-note"><strong>Weekly structure remains.</strong><span>ARIMA captures part of the daily cycle, but residuals still retain long-period dependence.</span></div>
           </div>
         </div>
         <div class="figure-wrap aspect-frame diagnostic-figure animate delay-2" style="--ratio: 1.83;">
@@ -1617,17 +1980,17 @@
     <section class="slide" data-section="Models" data-title="SARIMAX adds covariates, but weekly dependence remains">
       <div class="eyebrow animate">Classical Extension</div>
       <h2 class="animate delay-1">SARIMAX adds covariates, but weekly dependence remains.</h2>
-      <div class="slide-grid wide-right">
-        <div class="animate delay-1">
-          <div class="metric-row">
+      <div class="slide-grid wide-right arima-diagnostic-layout sarimax-layout">
+        <div class="sarimax-panel animate delay-1">
+          <div class="sarimax-metrics">
             <div class="metric"><span class="value">80.9</span><span class="label">validation RMSE</span></div>
             <div class="metric copper"><span class="value">81.3</span><span class="label">test RMSE</span></div>
             <div class="metric gold"><span class="value">0.50</span><span class="label">lag 168 residual ACF</span></div>
           </div>
-          <div class="bullet-list">
-            <div class="bullet">Weather, working day, holiday, year, and cyclic calendar terms are added.</div>
-            <div class="bullet">Daily residual autocorrelation improves.</div>
-            <div class="bullet">Weekly residual dependence is still large.</div>
+          <div class="sarimax-detail-list">
+            <div class="sarimax-detail-card"><strong>Order choice</strong><span>SARIMAX(2,0,2) with seasonal order (1,1,0,24), keeping low-order dynamics and a 24-hour seasonal difference.</span></div>
+            <div class="sarimax-detail-card"><strong>Covariates added</strong><span>Weather, working day, holiday, year, and cyclic calendar terms enter the model.</span></div>
+            <div class="sarimax-detail-card"><strong>Residual pattern</strong><span>Daily autocorrelation improves, but weekly dependence remains large.</span></div>
           </div>
         </div>
         <div class="figure-wrap aspect-frame diagnostic-figure animate delay-2" style="--ratio: 1.83;">
