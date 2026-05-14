@@ -398,6 +398,149 @@
       margin-top: 7px;
     }
 
+    .weather-notes {
+      display: grid;
+      grid-template-rows: repeat(4, 1fr);
+      gap: 16px;
+      align-self: center;
+    }
+
+    .weather-note {
+      min-height: 82px;
+      padding: 18px 22px;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      white-space: nowrap;
+    }
+
+    .weather-note strong {
+      color: var(--blue);
+      font-size: 21px;
+      line-height: 1.12;
+      flex: 0 0 128px;
+    }
+
+    .weather-note span {
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.28;
+    }
+
+    .weather-layout {
+      margin-top: 8px;
+      height: calc(100% - 130px);
+    }
+
+    .scale-layout {
+      margin-top: 30px;
+      gap: 18px;
+    }
+
+    .scale-layout .wide-chart-frame {
+      width: 100%;
+      justify-self: center;
+    }
+
+    .scale-layout .chart-note {
+      min-height: 78px;
+      padding: 14px 18px;
+    }
+
+    .dependence-layout {
+      align-items: start;
+      height: calc(100% - 132px);
+      margin-top: 24px;
+    }
+
+    .acf-panel {
+      display: grid;
+      gap: 18px;
+      align-self: start;
+      margin-top: 42px;
+    }
+
+    .dependence-layout .figure-wrap {
+      align-self: start;
+      margin-top: 42px;
+      width: 100%;
+      justify-self: center;
+    }
+
+    .acf-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .acf-card,
+    .diff-card {
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+
+    .acf-card {
+      min-height: 122px;
+      padding: 18px 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .acf-card .value {
+      font-family: Georgia, Times New Roman, serif;
+      font-size: 40px;
+      line-height: 0.95;
+      color: var(--blue);
+    }
+
+    .acf-card.gold .value {
+      color: var(--gold);
+    }
+
+    .acf-card.copper .value {
+      color: var(--copper);
+    }
+
+    .acf-card .label {
+      margin-top: 0px;
+      color: var(--muted);
+      font-size: 10.8px;
+      line-height: 1.15;
+      text-transform: uppercase;
+      letter-spacing: 0.55px;
+      font-weight: 760;
+      white-space: nowrap;
+    }
+
+    .diff-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .diff-card {
+      min-height: 135px;
+      padding: 18px 22px;
+    }
+
+    .diff-card strong {
+      color: var(--blue);
+      font-size: 20px;
+      line-height: 1.8;
+    }
+
+    .diff-card span {
+      display: block;
+      margin-top: 0px;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.28;
+    }
+
     .title-slide {
       padding: 0;
       display: none;
@@ -808,7 +951,8 @@
       grid-template-columns: 1fr 1fr;
       gap: 34px;
       align-items: stretch;
-      height: calc(100% - 225px);
+      height: calc(100% - 205px);
+      margin-top: 42px;
     }
 
     .data-panel {
@@ -1305,7 +1449,7 @@
 
     <section class="slide" data-section="EDA" data-title="Demand is skewed and seasonal">
       <div class="eyebrow animate">Exploratory Analysis</div>
-      <h2 class="animate delay-1">Demand is skewed, noisy hour to hour, and seasonal across the two years.</h2>
+      <h2 class="animate delay-1">Demand is skewed and seasonal across years.</h2>
       <div class="wide-chart-layout">
         <div class="figure-wrap wide-chart-frame animate delay-1" style="--ratio: 3.13;">
           <img src="../figures/eda_demand_scale.png" alt="Demand distribution and daily average demand">
@@ -1338,17 +1482,12 @@
     <section class="slide" data-section="EDA" data-title="Weather helps, but it is not the whole story">
       <div class="eyebrow animate">Weather Pattern</div>
       <h2 class="animate delay-1">Weather helps explain demand, but it does not replace temporal history.</h2>
-      <div class="slide-grid wide-right">
-        <div class="animate delay-1">
-          <div class="compact-card">
-            <div class="kicker">Observed relationships</div>
-            <div class="bullet-list">
-              <div class="bullet">Temperature generally increases demand.</div>
-              <div class="bullet">High humidity reduces median demand.</div>
-              <div class="bullet">Wind speed is weaker and noisier.</div>
-              <div class="bullet">Rain or snow lowers demand sharply.</div>
-            </div>
-          </div>
+      <div class="slide-grid wide-right weather-layout">
+        <div class="weather-notes animate delay-1">
+          <div class="weather-note"><strong>Temperature</strong><span>Generally increases demand.</span></div>
+          <div class="weather-note"><strong>Humidity</strong><span>High humidity reduces median demand.</span></div>
+          <div class="weather-note"><strong>Wind speed</strong><span>Weaker and noisier relationship.</span></div>
+          <div class="weather-note"><strong>Rain / snow</strong><span>Lowers demand sharply.</span></div>
         </div>
         <div class="figure-wrap aspect-frame animate delay-2" style="--ratio: 1.76;">
           <img src="../figures/eda_weather_pattern.png" alt="Weather relationships with bike demand">
@@ -1359,8 +1498,8 @@
 
     <section class="slide" data-section="EDA" data-title="Log scale stabilizes the modeling target">
       <div class="eyebrow animate">Scale Choice</div>
-      <h2 class="animate delay-1">The log scale makes the modeling target more stable.</h2>
-      <div class="wide-chart-layout">
+      <h2 class="animate delay-1">The log scale makes the demand more stable.</h2>
+      <div class="wide-chart-layout scale-layout">
         <div class="figure-wrap wide-chart-frame animate delay-1" style="--ratio: 2.99;">
           <img src="../figures/eda_mean_variance_check.png" alt="Mean-variance relationship on raw and log scale">
         </div>
@@ -1376,14 +1515,17 @@
     <section class="slide" data-section="EDA" data-title="Demand repeats across hours, days, and weeks">
       <div class="eyebrow animate">Dependence Structure</div>
       <h2 class="animate delay-1">Demand repeats across recent hours, yesterday, and last week.</h2>
-      <div class="slide-grid wide-right">
-        <div class="animate delay-1">
-          <div class="metric-row">
-            <div class="metric"><span class="value">0.90</span><span class="label">lag 1 autocorr.</span></div>
-            <div class="metric gold"><span class="value">0.87</span><span class="label">lag 24 autocorr.</span></div>
-            <div class="metric copper"><span class="value">0.91</span><span class="label">lag 168 autocorr.</span></div>
+      <div class="slide-grid wide-right dependence-layout">
+        <div class="acf-panel animate delay-1">
+          <div class="acf-metrics">
+            <div class="acf-card"><span class="value">0.90</span><span class="label">lag 1 autocorr.</span></div>
+            <div class="acf-card gold"><span class="value">0.87</span><span class="label">lag 24 autocorr.</span></div>
+            <div class="acf-card copper"><span class="value">0.91</span><span class="label">lag 168 autocorr.</span></div>
           </div>
-          <p class="body" style="margin-top: 22px;">These three numbers are the backbone of the modeling strategy: short-run, daily, and weekly history all matter.</p>
+          <div class="diff-list">
+            <div class="diff-card"><strong>First difference</strong><span>Reduces short-run persistence, but the daily pattern remains visible.</span></div>
+            <div class="diff-card"><strong>24-hour difference</strong><span>Removes more of the daily cycle, so it becomes the ARIMA benchmark choice.</span></div>
+          </div>
         </div>
         <div class="figure-wrap aspect-frame animate delay-2" style="--ratio: 1.62;">
           <img src="../figures/eda_acf_pacf_diagnostics.png" alt="ACF and PACF diagnostics">
