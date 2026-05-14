@@ -88,7 +88,7 @@ All models use the same data split configuration and random seed. And they are e
 **9:40-11:25 ARIMA**
 The first model is ARIMA, which I use as the classical benchmark.
 
-This model only uses past demand. Based on the earlier ACF and PACF analysis, I apply 24-hour differencing first, so the model is fitted to the differenced data. The choice of candidate order comes from the previous EDA. As we can see, the ACF is still visible at the first few lags, so I include MA terms up to order 2. Also, the PACF remains noticeable through about lag 3, so I include AR terms up to order 3.
+This model only uses past demand. Based on the earlier ACF and PACF analysis, I apply 24-hour differencing first, so the model is fitted to the differenced data. The choice of candidate order comes from the previous EDA. As we've seen before, the ACF is still visible at the first few lags, so I include MA terms up to order 2. Also, the PACF remains noticeable through about lag 3, so I include AR terms up to order 3.
 
 The best validation RMSE comes from ARIMA(2,0,2), although several nearby orders perform similarly. On the validation set, ARIMA has an RMSE around 83.5, and on the test set, around 84.2.
 
