@@ -460,12 +460,12 @@
       display: grid;
       gap: 18px;
       align-self: start;
-      margin-top: 42px;
+      margin-top: 24px;
     }
 
     .dependence-layout .figure-wrap {
       align-self: start;
-      margin-top: 42px;
+      margin-top: 24px;
       width: 100%;
       justify-self: center;
     }
@@ -1473,6 +1473,403 @@
       line-height: 1.28;
     }
 
+    .slide-grid.wide-right.lagged-layout {
+      grid-template-columns: 0.92fr 1.08fr;
+      gap: 24px;
+      align-items: start;
+      height: calc(100% - 126px);
+      margin-top: 60px;
+    }
+
+    .lagged-panel {
+      display: grid;
+      gap: 12px;
+      align-self: start;
+    }
+
+    .lagged-setting,
+    .lagged-effect,
+    .lagged-note {
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+
+    .lagged-setting {
+      min-height: 80px;
+      padding: 16px 20px;
+    }
+
+    .lagged-setting strong,
+    .lagged-note strong {
+      display: block;
+      color: var(--blue);
+      font-size: 19px;
+      line-height: 1.14;
+    }
+
+    .lagged-setting span,
+    .lagged-note span {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 15.5px;
+      line-height: 1.28;
+    }
+
+    .lagged-metrics {
+      margin-top: 0;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .lagged-metrics .metric {
+      min-width: 0;
+      min-height: 104px;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .lagged-effects {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .lagged-effect {
+      min-height: 128px;
+      padding: 16px 18px;
+    }
+
+    .lagged-effect strong {
+      display: block;
+      color: var(--blue);
+      font-size: 18px;
+      line-height: 1.12;
+    }
+
+    .lagged-effect span {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.28;
+    }
+
+    .lagged-note {
+      min-height: 104px;
+      padding: 16px 20px;
+    }
+
+    .slide-grid.wide-right.lagged-layout .figure-wrap {
+      aspect-ratio: auto;
+      height: 452px;
+      align-self: start;
+    }
+
+    .slide-grid.wide-right.lagged-layout .diagnostic-figure img {
+      transform: none;
+    }
+
+    .slide-grid.wide-right.poisson-layout {
+      grid-template-columns: 0.92fr 1.08fr;
+      gap: 24px;
+      align-items: start;
+      height: calc(100% - 126px);
+      margin-top: 48px;
+    }
+
+    .poisson-panel {
+      display: grid;
+      gap: 10px;
+      align-self: start;
+    }
+
+    .poisson-setting,
+    .poisson-detail-card {
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+
+    .poisson-setting {
+      min-height: 104px;
+      padding: 14px 18px;
+    }
+
+    .poisson-setting strong {
+      display: block;
+      color: var(--blue);
+      font-size: 19px;
+      line-height: 1.14;
+    }
+
+    .poisson-setting span {
+      display: block;
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.28;
+    }
+
+    .poisson-metrics {
+      margin-top: 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .poisson-metrics .metric {
+      min-width: 0;
+      min-height: 104px;
+      padding: 14px 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .poisson-metrics .metric .value {
+      font-size: 34px;
+    }
+
+    .poisson-detail-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .poisson-detail-card {
+      min-height: 94px;
+      padding: 14px 18px;
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .poisson-detail-card strong {
+      color: var(--blue);
+      font-size: 18px;
+      line-height: 1.14;
+    }
+
+    .poisson-detail-card span {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.28;
+    }
+
+    .slide-grid.wide-right.poisson-layout .figure-wrap {
+      aspect-ratio: auto;
+      height: 427px;
+      align-self: start;
+    }
+
+    .slide-grid.wide-right.poisson-layout .diagnostic-figure img {
+      transform: none;
+    }
+
+    .slide-grid.wide-right.rnn-layout {
+      grid-template-columns: 0.92fr 1.08fr;
+      gap: 24px;
+      align-items: start;
+      height: calc(100% - 126px);
+      margin-top: 48px;
+    }
+
+    .rnn-panel {
+      display: grid;
+      gap: 10px;
+      align-self: start;
+    }
+
+    .rnn-setting,
+    .rnn-config-card,
+    .rnn-note {
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+
+    .rnn-setting {
+      min-height: 84px;
+      padding: 14px 18px;
+    }
+
+    .rnn-setting strong,
+    .rnn-config-card strong,
+    .rnn-note strong {
+      display: block;
+      color: var(--blue);
+      font-size: 17.5px;
+      line-height: 1.14;
+    }
+
+    .rnn-setting span,
+    .rnn-config-card span,
+    .rnn-note span {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.25;
+    }
+
+    .rnn-metrics {
+      margin-top: 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .rnn-metrics .metric {
+      min-width: 0;
+      min-height: 92px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .rnn-metrics .metric .value {
+      font-size: 32px;
+    }
+
+    .rnn-config-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .rnn-config-card {
+      min-height: 82px;
+      padding: 13px 14px;
+    }
+
+    .rnn-note {
+      min-height: 76px;
+      padding: 14px 18px;
+    }
+
+    .rnn-figure-stack {
+      display: block;
+      height: 390px;
+      align-self: start;
+    }
+
+    .slide-grid.wide-right.rnn-layout .rnn-figure-stack .figure-wrap {
+      height: 100%;
+      width: 100%;
+      align-self: stretch;
+    }
+
+    .slide-grid.wide-right.rnn-layout .rnn-diagnostic-figure {
+      aspect-ratio: auto;
+    }
+
+    .slide-grid.wide-right.rnn-layout .rnn-training-figure {
+      aspect-ratio: 2.05 / 1;
+      width: 420px;
+      justify-self: center;
+    }
+
+    .slide-grid.wide-right.rnn-layout .rnn-figure-stack img {
+      transform: none;
+      object-fit: contain;
+    }
+
+    .slide-grid.wide-right.lstm-layout {
+      grid-template-columns: 0.92fr 1.08fr;
+      gap: 24px;
+      align-items: start;
+      height: calc(100% - 126px);
+      margin-top: 48px;
+    }
+
+    .lstm-panel {
+      display: grid;
+      gap: 10px;
+      align-self: start;
+    }
+
+    .lstm-setting,
+    .lstm-config-card {
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+
+    .lstm-setting {
+      min-height: 84px;
+      padding: 14px 18px;
+    }
+
+    .lstm-setting strong,
+    .lstm-config-card strong {
+      display: block;
+      color: var(--blue);
+      font-size: 17.5px;
+      line-height: 1.14;
+    }
+
+    .lstm-setting span,
+    .lstm-config-card span {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.25;
+    }
+
+    .lstm-metrics {
+      margin-top: 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .lstm-metrics .metric {
+      min-width: 0;
+      min-height: 92px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .lstm-metrics .metric .value {
+      font-size: 32px;
+    }
+
+    .lstm-config-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .lstm-config-card {
+      min-height: 82px;
+      padding: 13px 14px;
+    }
+
+    .lstm-figure {
+      height: 408px;
+      align-self: start;
+    }
+
+    .slide-grid.wide-right.lstm-layout .lstm-figure .figure-wrap {
+      aspect-ratio: auto;
+      height: 100%;
+      width: 100%;
+    }
+
+    .slide-grid.wide-right.lstm-layout .diagnostic-figure img {
+      transform: none;
+      object-fit: contain;
+    }
+
     .two-figures {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -1509,47 +1906,96 @@
       background: white;
     }
 
-    .takeaways {
+    .conclusion-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-      margin-top: 34px;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 22px;
+      margin-top: 28px;
+      height: 468px;
+      align-items: stretch;
     }
 
-    .takeaway {
-      min-height: 312px;
+    .conclusion-column {
+      display: grid;
+      gap: 14px;
+      align-content: stretch;
+    }
+
+    .conclusion-left {
+      grid-template-rows: 1.1fr 1fr 1.15fr;
+    }
+
+    .conclusion-right {
+      grid-template-rows: 1.1fr 1fr 0.65fr;
+    }
+
+    .conclusion-card {
       background: rgba(255, 255, 255, 0.74);
       border: 1px solid var(--line);
       border-radius: var(--radius);
-      padding: 24px;
+      padding: 17px 21px;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: center;
     }
 
-    .takeaway .label {
+    .conclusion-card .label {
       color: var(--gold);
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 1.2px;
     }
 
-    .takeaway strong {
+    .conclusion-card strong {
       display: block;
-      margin-top: 16px;
+      margin-top: 8px;
       color: var(--blue);
-      font-family: Georgia, Times New Roman, serif;
-      font-size: 30px;
-      line-height: 1.06;
-      font-weight: 500;
+      font-size: 21px;
+      line-height: 1.12;
+      font-weight: 800;
     }
 
-    .takeaway p {
-      margin-top: 18px;
+    .conclusion-card p {
+      margin-top: 7px;
       color: var(--muted);
-      font-size: 16px;
-      line-height: 1.38;
+      font-size: 14px;
+      line-height: 1.28;
+    }
+
+    .model-lessons {
+      display: grid;
+      grid-template-columns: 112px 1fr;
+      column-gap: 14px;
+      row-gap: 6px;
+      margin-top: 10px;
+      align-items: baseline;
+    }
+
+    .model-lessons b {
+      color: var(--blue);
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .model-lessons span {
+      color: var(--muted);
+      font-size: 13.5px;
+      line-height: 1.22;
+    }
+
+    .thanks-card {
+      border-color: rgba(181, 154, 99, 0.42);
+      background: rgba(255, 252, 246, 0.82);
+    }
+
+    .thanks-card strong {
+      margin-top: 0;
+      font-family: Georgia, Times New Roman, serif;
+      font-size: 30px;
+      font-weight: 500;
     }
 
     .footer {
@@ -1663,6 +2109,86 @@
       line-height: 1.26;
     }
 
+    .comparison-layout {
+      grid-template-columns: 1.18fr 0.82fr;
+      gap: 34px;
+      align-items: center;
+      transform: translateY(-44px);
+    }
+
+    .comparison-left {
+      display: grid;
+      gap: 14px;
+    }
+
+    .comparison-layout .bar-panel {
+      min-height: 300px;
+      padding: 18px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .comparison-layout .bar-row {
+      grid-template-columns: 190px 1fr 62px;
+      gap: 16px;
+      margin: 10px 0;
+      font-size: 16px;
+      color: var(--blue) !important;
+    }
+
+    .comparison-layout .bar-track {
+      height: 17px;
+    }
+
+    .comparison-layout .bar-value {
+      color: var(--muted);
+      font-size: 16px;
+      font-weight: 760;
+    }
+
+    .comparison-claim-card {
+      min-height: 68px;
+      padding: 12px 22px;
+      display: flex;
+      align-items: center;
+    }
+
+    .comparison-claim-card strong {
+      color: var(--blue);
+      font-size: 18.5px;
+      line-height: 1.18;
+    }
+
+    .comparison-right {
+      display: grid;
+      gap: 12px;
+    }
+
+    .comparison-right .compact-card {
+      min-height: 122px;
+      padding: 18px 21px;
+    }
+
+    .comparison-right .compact-card .kicker {
+      color: var(--gold);
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    .comparison-right .compact-card h3 {
+      color: var(--blue) !important;
+      font-size: 20.5px;
+      line-height: 1.12;
+    }
+
+    .comparison-right .compact-card p {
+      color: var(--muted);
+      font-size: 15.5px;
+      line-height: 1.34;
+      margin-top: 10px;
+    }
+
     @media (max-width: 900px) {
       .slide {
         padding: 28px;
@@ -1679,7 +2205,7 @@
       .slide-grid,
       .slide-grid.wide-left,
       .slide-grid.wide-right,
-      .takeaways,
+      .conclusion-grid,
       .roadmap,
       .model-grid {
         grid-template-columns: 1fr;
@@ -1919,7 +2445,7 @@
           <div class="segment seg-test">20% Test</div>
         </div>
       </div>
-      <div class="slide-grid three modeling-cards" style="height: auto; margin-top: 34px;">
+      <div class="slide-grid three modeling-cards animate delay-3" style="height: auto; margin-top: 34px;">
         <div class="compact-card"><div class="kicker">Selection</div><h3>Validation period</h3><p>Model order, window length, and tuning choices are made before test evaluation.</p></div>
         <div class="compact-card"><div class="kicker">Leakage control</div><h3>One-week gaps</h3><p>The 168-hour gaps reduce leakage from long lagged features.</p></div>
         <div class="compact-card"><div class="kicker">Scoring</div><h3>MAE and RMSE</h3><p>Every model is compared on the original hourly rental count scale.</p></div>
@@ -2003,19 +2529,23 @@
     <section class="slide" data-section="Models" data-title="Lagged regression makes the EDA explicit">
       <div class="eyebrow animate">Interpretable Feature Model</div>
       <h2 class="animate delay-1">Lagged regression makes the EDA explicit.</h2>
-      <div class="slide-grid wide-right">
-        <div class="animate delay-1">
-          <p class="claim">The model uses short-run, daily, and weekly lags together with calendar and weather predictors.</p>
-          <div class="chip-row">
-            <span class="chip">lag 1 positive/significant</span>
-            <span class="chip">lag 24 positive/significant</span>
-            <span class="chip">lag 168 positive/significant</span>
-            <span class="chip">temperature positive</span>
-            <span class="chip">humidity negative</span>
+      <div class="slide-grid wide-right lagged-layout">
+        <div class="lagged-panel animate delay-1">
+          <div class="lagged-setting">
+            <strong>Log-demand model with explicit time lags.</strong>
+            <span>Uses lags 1, 2, 3, 24, and 168, plus calendar and weather variables.</span>
           </div>
-          <div class="metric-row">
+          <div class="lagged-metrics">
             <div class="metric gold"><span class="value">65.7</span><span class="label">validation RMSE</span></div>
             <div class="metric copper"><span class="value">59.4</span><span class="label">test RMSE</span></div>
+          </div>
+          <div class="lagged-effects">
+            <div class="lagged-effect"><strong>Lag effects</strong><span>Recent, daily, and weekly lags are positive and significant.</span></div>
+            <div class="lagged-effect"><strong>Weather effects</strong><span>Temperature is positive; humidity, wind speed, and bad weather reduce demand.</span></div>
+          </div>
+          <div class="lagged-note">
+            <strong>Improves accuracy, but residuals are not clean.</strong>
+            <span>Short, daily, and weekly autocorrelation remains, with larger spread at some fitted values.</span>
           </div>
         </div>
         <div class="figure-wrap aspect-frame diagnostic-figure animate delay-2" style="--ratio: 1.83;">
@@ -2028,14 +2558,20 @@
     <section class="slide" data-section="Models" data-title="Poisson helps, but counts are overdispersed">
       <div class="eyebrow animate">Count Model Extension</div>
       <h2 class="animate delay-1">Poisson regression helps, but the counts are overdispersed.</h2>
-      <div class="slide-grid wide-right">
-        <div class="animate delay-1">
-          <div class="big-number" style="font-size: 98px;">7.14</div>
-          <div class="unit">Pearson dispersion statistic</div>
-          <p class="body" style="margin-top: 20px;">A plain Poisson model assumes conditional mean equals conditional variance. Here the variance is much larger.</p>
-          <div class="metric-row">
-            <div class="metric"><span class="value">62.1</span><span class="label">validation RMSE</span></div>
+      <div class="slide-grid wide-right poisson-layout">
+        <div class="poisson-panel animate delay-1">
+          <div class="poisson-setting">
+            <strong>Same predictors, count model likelihood.</strong>
+            <span>Uses the lagged-regression predictor set, but models hourly counts with a log link and Poisson likelihood.</span>
+          </div>
+          <div class="poisson-metrics">
+            <div class="metric gold"><span class="value">62.1</span><span class="label">validation RMSE</span></div>
             <div class="metric copper"><span class="value">57.8</span><span class="label">test RMSE</span></div>
+            <div class="metric"><span class="value">7.14</span><span class="label">Pearson dispersion</span></div>
+          </div>
+          <div class="poisson-detail-list">
+            <div class="poisson-detail-card"><strong>Assumption <br>too tight</strong><span>Poisson assumes equal mean and variance. Pearson dispersion indicates overdispersion.</span></div>
+            <div class="poisson-detail-card"><strong>Future direction</strong><span>Negative binomial regression is a more natural next count-model extension.</span></div>
           </div>
         </div>
         <div class="figure-wrap aspect-frame diagnostic-figure animate delay-2" style="--ratio: 1.83;">
@@ -2048,24 +2584,40 @@
     <section class="slide" data-section="Models" data-title="RNN learns from a rolling history window">
       <div class="eyebrow animate">Neural Sequence Model</div>
       <h2 class="animate delay-1">RNN learns from a rolling history window instead of fixed lag columns.</h2>
-      <div class="slide-grid wide-right">
-        <div class="animate delay-1">
-          <div class="metric-row">
+      <div class="slide-grid wide-right rnn-layout">
+        <div class="rnn-panel animate delay-1">
+          <div class="rnn-setting">
+            <strong>Rolling history window plus target-time features.</strong>
+            <span>Reads a sequence of past observations and combines it with calendar and weather features at the forecast hour.</span>
+          </div>
+          <div class="rnn-metrics">
             <div class="metric"><span class="value">72h</span><span class="label">selected window</span></div>
             <div class="metric gold"><span class="value">55.4</span><span class="label">validation RMSE</span></div>
             <div class="metric copper"><span class="value">55.2</span><span class="label">test RMSE</span></div>
           </div>
-          <table class="mini-table" style="margin-top: 18px;">
-            <thead><tr><th>Window</th><th>Validation RMSE</th><th>Test RMSE</th></tr></thead>
-            <tbody>
-              <tr><td>72h</td><td>55.4</td><td>55.2</td></tr>
-              <tr><td class="muted">24h</td><td class="muted">55.5</td><td class="muted">55.3</td></tr>
-              <tr><td class="muted">168h</td><td class="muted">55.6</td><td class="muted">55.2</td></tr>
-            </tbody>
-          </table>
+          <div class="rnn-config-grid">
+            <div class="rnn-config-card">
+              <strong>Windows tested</strong>
+              <span>24, 72, and 168 hours; 72h balances daily cycles and length.</span>
+            </div>
+            <div class="rnn-config-card">
+              <strong>Architecture</strong>
+              <span>1-layer tanh RNN, hidden size 32, dense output head.</span>
+            </div>
+            <div class="rnn-config-card">
+              <strong>Training</strong>
+              <span>40 epochs, batch size 256, learning rate 0.001.</span>
+            </div>
+            <div class="rnn-config-card">
+              <strong>Diagnostics</strong>
+              <span>Autocorrelation remains, especially around recurring calendar patterns.</span>
+            </div>
+          </div>
         </div>
-        <div class="figure-wrap aspect-frame animate delay-2" style="--ratio: 2.05;">
-          <img src="../figures/diagnostic_rnn_training.png" alt="RNN training history">
+        <div class="rnn-figure-stack animate delay-2">
+          <div class="figure-wrap aspect-frame diagnostic-figure rnn-diagnostic-figure">
+            <img src="../figures/diagnostic_rnn_validation.png" alt="RNN validation residual diagnostics">
+          </div>
         </div>
       </div>
       <div class="footer"><span>RNN</span><div class="progress"><span></span></div></div>
@@ -2074,21 +2626,40 @@
     <section class="slide" data-section="Models" data-title="LSTM gives the strongest forecasts">
       <div class="eyebrow animate">Gated Sequence Model</div>
       <h2 class="animate delay-1">LSTM gives the strongest forecasts in validation and remains strong on test.</h2>
-      <div class="slide-grid wide-right">
-        <div class="animate delay-1">
-          <div class="metric-row">
+      <div class="slide-grid wide-right lstm-layout">
+        <div class="lstm-panel animate delay-1">
+          <div class="lstm-setting">
+            <strong>Same sequence setup, with gated memory.</strong>
+            <span>Reads a rolling history window and learns what recent information to keep or forget.</span>
+          </div>
+          <div class="lstm-metrics">
             <div class="metric"><span class="value">72h</span><span class="label">selected window</span></div>
             <div class="metric gold"><span class="value">43.5</span><span class="label">validation RMSE</span></div>
             <div class="metric copper"><span class="value">43.9</span><span class="label">test RMSE</span></div>
           </div>
-          <div class="bullet-list">
-            <div class="bullet">Gated memory improves nonlinear sequence learning.</div>
-            <div class="bullet">Residual spread is the smallest among fitted models.</div>
-            <div class="bullet">Daily and weekly residual autocorrelation are reduced, not eliminated.</div>
+          <div class="lstm-config-grid">
+            <div class="lstm-config-card">
+              <strong>Windows tested</strong>
+              <span>24, 72, and 168 hours; validation selects 72h again.</span>
+            </div>
+            <div class="lstm-config-card">
+              <strong>Architecture</strong>
+              <span>2-layer LSTM, hidden size 96, dropout 0.15.</span>
+            </div>
+            <div class="lstm-config-card">
+              <strong>Training</strong>
+              <span>80 epochs, batch size 128, learning rate 0.0008.</span>
+            </div>
+            <div class="lstm-config-card">
+              <strong>Diagnostics</strong>
+              <span>Residual spread is smaller; lag-24 and lag-168 autocorrelation are reduced.</span>
+            </div>
           </div>
         </div>
-        <div class="figure-wrap aspect-frame animate delay-2" style="--ratio: 2.05;">
-          <img src="../figures/diagnostic_lstm_training.png" alt="LSTM training history">
+        <div class="lstm-figure animate delay-2">
+          <div class="figure-wrap aspect-frame diagnostic-figure">
+            <img src="../figures/diagnostic_lstm_validation.png" alt="LSTM validation residual diagnostics">
+          </div>
         </div>
       </div>
       <div class="footer"><span>LSTM</span><div class="progress"><span></span></div></div>
@@ -2097,23 +2668,25 @@
     <section class="slide" data-section="Results" data-title="Sequence models win the final comparison">
       <div class="eyebrow animate">Model Comparison</div>
       <h2 class="animate delay-1">Sequence models win the final comparison, with LSTM clearly ahead.</h2>
-      <div class="slide-grid wide-left">
-        <div class="bar-panel animate delay-1">
-          <div class="bar-row"><span>ARIMA</span><div class="bar-track"><div class="bar-fill" style="width: 100%;"></div></div><span class="bar-value">84.2</span></div>
-          <div class="bar-row"><span>SARIMAX</span><div class="bar-track"><div class="bar-fill" style="width: 96.5%;"></div></div><span class="bar-value">81.3</span></div>
-          <div class="bar-row"><span>Lagged Regression</span><div class="bar-track"><div class="bar-fill" style="width: 70.6%;"></div></div><span class="bar-value">59.4</span></div>
-          <div class="bar-row"><span>Poisson Lagged</span><div class="bar-track"><div class="bar-fill" style="width: 68.6%;"></div></div><span class="bar-value">57.8</span></div>
-          <div class="bar-row"><span>RNN</span><div class="bar-track"><div class="bar-fill" style="width: 65.5%;"></div></div><span class="bar-value">55.2</span></div>
-          <div class="bar-row"><span>LSTM</span><div class="bar-track"><div class="bar-fill best" style="width: 52.1%;"></div></div><span class="bar-value">43.9</span></div>
-          <p class="source">Test RMSE, lower is better.</p>
-        </div>
-        <div class="animate delay-2">
-          <p class="claim">The biggest gains come from representing temporal history directly.</p>
-          <div class="model-grid comparison-notes">
-            <div class="compact-card"><div class="kicker">Classical</div><h3>Stable baseline</h3><p>Useful reference point, but misses repeated weekly structure.</p></div>
-            <div class="compact-card"><div class="kicker">Lagged regression</div><h3>Interpretable improvement</h3><p>Explicit lags make the EDA operational.</p></div>
-            <div class="compact-card"><div class="kicker">Neural sequence</div><h3>Best forecast accuracy</h3><p>Rolling history windows capture nonlinear hourly behavior.</p></div>
+      <div class="slide-grid wide-left comparison-layout">
+        <div class="comparison-left animate delay-1">
+          <div class="bar-panel">
+            <div class="bar-row"><span>ARIMA</span><div class="bar-track"><div class="bar-fill" style="width: 100%;"></div></div><span class="bar-value">84.2</span></div>
+            <div class="bar-row"><span>SARIMAX</span><div class="bar-track"><div class="bar-fill" style="width: 96.5%;"></div></div><span class="bar-value">81.3</span></div>
+            <div class="bar-row"><span>Lagged Regression</span><div class="bar-track"><div class="bar-fill" style="width: 70.6%;"></div></div><span class="bar-value">59.4</span></div>
+            <div class="bar-row"><span>Poisson Lagged</span><div class="bar-track"><div class="bar-fill" style="width: 68.6%;"></div></div><span class="bar-value">57.8</span></div>
+            <div class="bar-row"><span>RNN</span><div class="bar-track"><div class="bar-fill" style="width: 65.5%;"></div></div><span class="bar-value">55.2</span></div>
+            <div class="bar-row"><span>LSTM</span><div class="bar-track"><div class="bar-fill best" style="width: 52.1%;"></div></div><span class="bar-value">43.9</span></div>
+            <p class="source">Test RMSE, lower is better.</p>
           </div>
+          <div class="compact-card comparison-claim-card">
+            <strong>Adding temporal history and exogenous context lowers test RMSE, with LSTM lowest at 43.9.</strong>
+          </div>
+        </div>
+        <div class="comparison-right animate delay-2">
+          <div class="compact-card"><div class="kicker">Classical</div><h3>Stable baseline</h3><p>Useful reference point, but misses repeated weekly structure.</p></div>
+          <div class="compact-card"><div class="kicker">Lagged regression</div><h3>Interpretable improvement</h3><p>Explicit lags make the EDA operational.</p></div>
+          <div class="compact-card"><div class="kicker">Neural sequence</div><h3>Best forecast accuracy</h3><p>Rolling history windows capture nonlinear hourly behavior.</p></div>
         </div>
       </div>
       <div class="footer"><span>Final Ranking</span><div class="progress"><span></span></div></div>
@@ -2121,43 +2694,53 @@
 
     <section class="slide" data-section="Results" data-title="Forecast errors concentrate around peaks">
       <div class="eyebrow animate">Forecast Interpretation</div>
-      <h2 class="animate delay-1">Most models capture the daily cycle; peak timing and magnitude are harder.</h2>
+      <h2 class="animate delay-1">Most models capture the daily cycle, <br>but peak timing and magnitude are harder.</h2>
       <div class="forecast-layout animate delay-2">
         <div class="iframe-wrap forecast-main" title="Interactive forecast comparison">
           <iframe src="../figures/analysis_interactive_forecast_comparison.html" loading="lazy"></iframe>
         </div>
-      </div>
-      <div class="chip-row animate delay-2">
-        <span class="chip">broad daily cycle captured</span>
-        <span class="chip">classical models are smoother</span>
-        <span class="chip">RNN/LSTM track peaks more closely</span>
       </div>
       <div class="footer"><span>Actual vs Predicted</span><div class="progress"><span></span></div></div>
     </section>
 
     <section class="slide" data-section="Conclusion" data-title="Takeaways and next steps">
       <div class="eyebrow animate">Conclusion</div>
-      <h2 class="animate delay-1">Hourly bike demand is forecastable because it is structured.</h2>
-      <div class="takeaways animate delay-2">
-        <div class="takeaway">
-          <div>
-            <span class="label">Structure</span>
-            <strong>History carries the signal.</strong>
-            <p>Demand repeats across recent hours, daily cycles, weekly rhythms, working-day behavior, seasonality, and weather.</p>
+      <h2 class="animate delay-1">Hourly bike demand is forecastable because its structure is strong.</h2>
+      <div class="conclusion-grid animate delay-2">
+        <div class="conclusion-column conclusion-left">
+          <div class="conclusion-card">
+            <span class="label">Research question</span>
+            <strong>Demand has clear temporal structure.</strong>
+            <p>It is shaped by short-run persistence, daily cycles, weekly repetition, working-day differences, seasonality, and weather.</p>
+          </div>
+          <div class="conclusion-card">
+            <span class="label">Best forecast</span>
+            <strong>LSTM with a 72-hour window.</strong>
+            <p>This is the strongest model in the project, with test RMSE around 43.9.</p>
+          </div>
+          <div class="conclusion-card">
+            <span class="label">What simpler models add</span>
+            <div class="model-lessons">
+              <b>ARIMA</b><span>Daily differencing matters.</span>
+              <b>Lagged regression</b><span>Lags 1, 24, and 168 are important.</span>
+              <b>Poisson</b><span>Count modeling is reasonable, but the data are overdispersed.</span>
+            </div>
           </div>
         </div>
-        <div class="takeaway">
-          <div>
-            <span class="label">Best model</span>
-            <strong>LSTM, 72-hour window.</strong>
-            <p>It gives the lowest validation RMSE and remains strong on the held-out test period.</p>
+        <div class="conclusion-column conclusion-right">
+          <div class="conclusion-card">
+            <span class="label">Main limitation</span>
+            <strong>Some repeated structure remains.</strong>
+            <p>Residual autocorrelation does not disappear completely, even for the best model.</p>
+            <p>The analysis also uses aggregate system-level demand, so it does not model station-level spatial imbalance.</p>
           </div>
-        </div>
-        <div class="takeaway">
-          <div>
+          <div class="conclusion-card">
             <span class="label">Next steps</span>
-            <strong>Model uncertainty and location.</strong>
-            <p>Natural extensions are negative binomial forecasts, probabilistic intervals, and station-level spatial demand.</p>
+            <strong>Move beyond point forecasts.</strong>
+            <p>Useful extensions would be negative binomial models, probabilistic forecasts, and station-level models for location and rebalancing needs.</p>
+          </div>
+          <div class="conclusion-card thanks-card">
+            <strong>Thank you.</strong>
           </div>
         </div>
       </div>
