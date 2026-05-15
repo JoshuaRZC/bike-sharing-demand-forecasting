@@ -1,10 +1,10 @@
 **Script**
 **0:00-0:40 Title**
-Hi everyone, my project is about forecasting hourly bike-sharing demand in Washington, DC.
+Hi, I'm Joshua. my project is about forecasting hourly bike-sharing demand in Washington, DC.
 
 The main question is: what temporal structure characterizes hourly bike-sharing demand, and how well can we forecast short-term demand using historical usage, calendar variables, and weather conditions?
 
-In this project, I focus on the total number of bike rentals in each hour, and the goal is not only to get a good forecast, but also to understand what kind of time dependence is driving the forecasts.
+In this project, I focus on the total number of bike rentals in each hour, and the goal is not only to get a good forecast, but also to understand what kind of time dependence is driving the forecast.
 
 **0:40-1:40 Motivation**
 Let me first introduce the background and motivation behind this project. Bike-sharing is a suitable setting for time series analysis because demand changes a lot within a day. A station can be busy during commute hours, quiet overnight, and then busy again the next morning.
